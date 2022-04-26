@@ -1,0 +1,31 @@
+---
+title: "ANS DEP TSST LMM"
+author: "AGC"
+date: "26 4 2022"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      messages =F, 
+                      warning = F)
+
+library(haven)
+library(tidyverse)
+library(data.table)
+library(lme4)
+library(kableExtra)
+library(caret)
+library(ggplot2)
+library(compareGroups)
+library(lm.beta)
+
+home = getwd()
+
+```
+
+
+# IN PROGRESS
+
