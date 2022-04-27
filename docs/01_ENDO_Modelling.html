@@ -382,7 +382,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-04-26
+<strong>Last updated:</strong> 2022-04-27
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -473,16 +473,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPTSSTtree60f82207879f7dfcd48d155943a3fb66fa19d5fbtargetblank60f8220a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/DEP_TSST/tree/60f82207879f7dfcd48d155943a3fb66fa19d5fb" target="_blank">60f8220</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPTSSTtreec0002c4a9ec4dfa9a817d7bb09b72c4804f5de5atargetblankc0002c4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/DEP_TSST/tree/c0002c4a9ec4dfa9a817d7bb09b72c4804f5de5a" target="_blank">c0002c4</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPTSSTtree60f82207879f7dfcd48d155943a3fb66fa19d5fbtargetblank60f8220a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPTSSTtreec0002c4a9ec4dfa9a817d7bb09b72c4804f5de5atargetblankc0002c4a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/DEP_TSST/tree/60f82207879f7dfcd48d155943a3fb66fa19d5fb" target="_blank">60f8220</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/DEP_TSST/tree/c0002c4a9ec4dfa9a817d7bb09b72c4804f5de5a" target="_blank">c0002c4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -490,8 +490,6 @@ Note that you need to be careful to ensure that all relevant files for the analy
 <pre><code>
 Ignored files:
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
-    Ignored:    analysis/site_libs/
 
 Untracked files:
     Untracked:  Info für Andreas.docx
@@ -502,6 +500,7 @@ Untracked files:
 
 Unstaged changes:
     Modified:   _workflowr.yml
+    Modified:   analysis/02_ANS_Modelling.Rmd
 
 </code></pre>
 <p>
@@ -595,7 +594,7 @@ df_ENDO$ADHD_life = drop(factor(df_ENDO$ADHD_life, levels = c(0,1),
 df_ENDO$Eat_life = drop(factor(df_ENDO$Eat_life, levels = c(0,1), 
                                labels=c(&quot;no_EatDis&quot;, &quot;EatDis&quot;)))%&gt;% relevel(., ref=&quot;no_EatDis&quot;)
 
-df_ENDO$ANXPTSD_life = drop(factor(df_ENDO$SUD_life, levels = c(0,1), 
+df_ENDO$ANXPTSD_life = drop(factor(df_ENDO$ANXPTSD_life, levels = c(0,1), 
                                labels=c(&quot;no_ANXPTSD&quot;, &quot;ANXPTSD&quot;)))%&gt;% relevel(., ref=&quot;no_ANXPTSD&quot;)
 
 df_ENDO$any_med_ccept = drop(factor(df_ENDO$any_med_ccept, levels = c(0,1), 
@@ -1215,7 +1214,7 @@ ANXPTSD_life:
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-0.144
+&lt;0.001
 </td>
 </tr>
 <tr>
@@ -1223,10 +1222,10 @@ ANXPTSD_life:
 no_ANXPTSD
 </td>
 <td style="text-align:center;">
-72 (100%)
+68 (94.4%)
 </td>
 <td style="text-align:center;">
-99 (96.1%)
+48 (46.6%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1236,10 +1235,10 @@ no_ANXPTSD
 ANXPTSD
 </td>
 <td style="text-align:center;">
-0 (0.00%)
+4 (5.56%)
 </td>
 <td style="text-align:center;">
-4 (3.88%)
+55 (53.4%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1786,7 +1785,7 @@ ANXPTSD_life:
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-0.138
+&lt;0.001
 </td>
 </tr>
 <tr>
@@ -1794,10 +1793,10 @@ ANXPTSD_life:
 no_ANXPTSD
 </td>
 <td style="text-align:center;">
-27 (100%)
+26 (96.3%)
 </td>
 <td style="text-align:center;">
-35 (89.7%)
+18 (46.2%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1807,10 +1806,10 @@ no_ANXPTSD
 ANXPTSD
 </td>
 <td style="text-align:center;">
-0 (0.00%)
+1 (3.70%)
 </td>
 <td style="text-align:center;">
-4 (10.3%)
+21 (53.8%)
 </td>
 <td style="text-align:center;">
 </td>
@@ -2351,16 +2350,40 @@ EatDis
 </tr>
 <tr>
 <td style="text-align:left;">
-ANXPTSD_life: no_ANXPTSD
+ANXPTSD_life:
 </td>
 <td style="text-align:center;">
-45 (100%)
 </td>
 <td style="text-align:center;">
-64 (100%)
 </td>
 <td style="text-align:center;">
-.
+&lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+no_ANXPTSD
+</td>
+<td style="text-align:center;">
+42 (93.3%)
+</td>
+<td style="text-align:center;">
+30 (46.9%)
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+ANXPTSD
+</td>
+<td style="text-align:center;">
+3 (6.67%)
+</td>
+<td style="text-align:center;">
+34 (53.1%)
+</td>
+<td style="text-align:center;">
 </td>
 </tr>
 </tbody>
@@ -4174,19 +4197,19 @@ pvalue
 (Intercept)
 </td>
 <td style="text-align:left;">
--0.445
+-0.453
 </td>
 <td style="text-align:left;">
 0.125
 </td>
 <td style="text-align:left;">
--3.57
+-3.61
 </td>
 <td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
-0.000361
+0.000304
 </td>
 </tr>
 <tr>
@@ -4194,19 +4217,19 @@ NA
 ANXPTSD_lifeANXPTSD
 </td>
 <td style="text-align:left;">
-0.702
+0.211
 </td>
 <td style="text-align:left;">
-0.309
+0.109
 </td>
 <td style="text-align:left;">
-2.27
+1.95
 </td>
 <td style="text-align:left;">
-0.105
+0.0997
 </td>
 <td style="text-align:left;">
-0.0231
+0.0517
 </td>
 </tr>
 <tr>
@@ -4214,19 +4237,19 @@ ANXPTSD_lifeANXPTSD
 age_meancentered
 </td>
 <td style="text-align:left;">
-0.0482
+0.0517
 </td>
 <td style="text-align:left;">
-0.054
+0.0542
 </td>
 <td style="text-align:left;">
-0.893
+0.954
 </td>
 <td style="text-align:left;">
-0.0483
+0.0518
 </td>
 <td style="text-align:left;">
-0.372
+0.34
 </td>
 </tr>
 <tr>
@@ -4234,19 +4257,19 @@ age_meancentered
 pubcatimp
 </td>
 <td style="text-align:left;">
-0.0558
+0.0556
 </td>
 <td style="text-align:left;">
-0.0633
+0.0636
 </td>
 <td style="text-align:left;">
-0.881
+0.874
 </td>
 <td style="text-align:left;">
-0.0557
+0.0554
 </td>
 <td style="text-align:left;">
-0.378
+0.382
 </td>
 </tr>
 <tr>
@@ -4254,19 +4277,19 @@ pubcatimp
 genderfemale
 </td>
 <td style="text-align:left;">
-0.00448
+-0.00151
 </td>
 <td style="text-align:left;">
-0.161
+0.162
 </td>
 <td style="text-align:left;">
-0.0279
+-0.00934
 </td>
 <td style="text-align:left;">
-0.00217
+-0.000731
 </td>
 <td style="text-align:left;">
-0.978
+0.993
 </td>
 </tr>
 <tr>
@@ -4274,19 +4297,19 @@ genderfemale
 groupDEP
 </td>
 <td style="text-align:left;">
-0.505
+0.47
 </td>
 <td style="text-align:left;">
-0.152
+0.159
 </td>
 <td style="text-align:left;">
-3.33
+2.96
 </td>
 <td style="text-align:left;">
-0.248
+0.231
 </td>
 <td style="text-align:left;">
-0.000876
+0.00303
 </td>
 </tr>
 <tr>
@@ -4306,7 +4329,7 @@ poly(Time, 2)1
 -0.176
 </td>
 <td style="text-align:left;">
-6.08e-05
+6.09e-05
 </td>
 </tr>
 <tr>
@@ -4334,19 +4357,19 @@ poly(Time, 2)2
 genderfemale:groupDEP
 </td>
 <td style="text-align:left;">
-0.351
+0.288
 </td>
 <td style="text-align:left;">
-0.189
+0.187
 </td>
 <td style="text-align:left;">
-1.86
+1.54
 </td>
 <td style="text-align:left;">
-0.169
+0.139
 </td>
 <td style="text-align:left;">
-0.0627
+0.124
 </td>
 </tr>
 <tr>
@@ -4354,7 +4377,7 @@ genderfemale:groupDEP
 groupDEP:poly(Time, 2)1
 </td>
 <td style="text-align:left;">
--7.19
+-7.18
 </td>
 <td style="text-align:left;">
 2.16
@@ -4363,10 +4386,10 @@ groupDEP:poly(Time, 2)1
 -3.33
 </td>
 <td style="text-align:left;">
--0.147
+-0.146
 </td>
 <td style="text-align:left;">
-0.000857
+0.000877
 </td>
 </tr>
 <tr>
@@ -4394,7 +4417,7 @@ groupDEP:poly(Time, 2)2
 genderfemale:poly(Time, 2)1
 </td>
 <td style="text-align:left;">
--2.66
+-2.67
 </td>
 <td style="text-align:left;">
 2.08
@@ -4434,19 +4457,19 @@ genderfemale:poly(Time, 2)2
 genderfemale:groupDEP:poly(Time, 2)1
 </td>
 <td style="text-align:left;">
--0.695
+-0.703
 </td>
 <td style="text-align:left;">
 2.73
 </td>
 <td style="text-align:left;">
--0.255
+-0.258
 </td>
 <td style="text-align:left;">
--0.0112
+-0.0113
 </td>
 <td style="text-align:left;">
-0.799
+0.797
 </td>
 </tr>
 <tr>
@@ -6399,19 +6422,19 @@ pvalue
 (Intercept)
 </td>
 <td style="text-align:left;">
-0.0163
+0.0268
 </td>
 <td style="text-align:left;">
-0.181
+0.18
 </td>
 <td style="text-align:left;">
-0.0902
+0.149
 </td>
 <td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
-0.928
+0.882
 </td>
 </tr>
 <tr>
@@ -6419,19 +6442,19 @@ NA
 ANXPTSD_lifeANXPTSD
 </td>
 <td style="text-align:left;">
-0.0795
+-0.262
 </td>
 <td style="text-align:left;">
-0.457
+0.155
 </td>
 <td style="text-align:left;">
-0.174
+-1.69
 </td>
 <td style="text-align:left;">
-0.012
+-0.123
 </td>
 <td style="text-align:left;">
-0.862
+0.0909
 </td>
 </tr>
 <tr>
@@ -6439,19 +6462,19 @@ ANXPTSD_lifeANXPTSD
 age_meancentered
 </td>
 <td style="text-align:left;">
-0.143
+0.142
 </td>
 <td style="text-align:left;">
-0.0785
+0.0778
 </td>
 <td style="text-align:left;">
-1.83
+1.82
 </td>
 <td style="text-align:left;">
-0.144
+0.142
 </td>
 <td style="text-align:left;">
-0.0677
+0.0686
 </td>
 </tr>
 <tr>
@@ -6459,19 +6482,19 @@ age_meancentered
 BMI_meancentered
 </td>
 <td style="text-align:left;">
--0.056
+-0.051
 </td>
 <td style="text-align:left;">
-0.0689
+0.0683
 </td>
 <td style="text-align:left;">
--0.812
+-0.746
 </td>
 <td style="text-align:left;">
--0.0557
+-0.0507
 </td>
 <td style="text-align:left;">
-0.417
+0.456
 </td>
 </tr>
 <tr>
@@ -6482,16 +6505,16 @@ pubcatimp
 0.101
 </td>
 <td style="text-align:left;">
-0.0933
+0.0925
 </td>
 <td style="text-align:left;">
-1.09
+1.1
 </td>
 <td style="text-align:left;">
 0.1
 </td>
 <td style="text-align:left;">
-0.277
+0.273
 </td>
 </tr>
 <tr>
@@ -6502,16 +6525,16 @@ smoking_yes_nosmk
 -0.173
 </td>
 <td style="text-align:left;">
-0.171
+0.165
 </td>
 <td style="text-align:left;">
--1.01
+-1.05
 </td>
 <td style="text-align:left;">
--0.0731
+-0.0729
 </td>
 <td style="text-align:left;">
-0.31
+0.296
 </td>
 </tr>
 <tr>
@@ -6519,19 +6542,19 @@ smoking_yes_nosmk
 genderfemale
 </td>
 <td style="text-align:left;">
-0.07
+0.079
 </td>
 <td style="text-align:left;">
-0.234
+0.232
 </td>
 <td style="text-align:left;">
-0.299
+0.34
 </td>
 <td style="text-align:left;">
-0.0339
+0.0383
 </td>
 <td style="text-align:left;">
-0.765
+0.734
 </td>
 </tr>
 <tr>
@@ -6539,19 +6562,19 @@ genderfemale
 groupDEP
 </td>
 <td style="text-align:left;">
--0.0255
+0.109
 </td>
 <td style="text-align:left;">
-0.222
+0.227
 </td>
 <td style="text-align:left;">
--0.115
+0.479
 </td>
 <td style="text-align:left;">
--0.0126
+0.0537
 </td>
 <td style="text-align:left;">
-0.908
+0.632
 </td>
 </tr>
 <tr>
@@ -6599,19 +6622,19 @@ poly(Time, 2)2
 genderfemale:groupDEP
 </td>
 <td style="text-align:left;">
--0.0223
+-0.0399
 </td>
 <td style="text-align:left;">
-0.279
+0.271
 </td>
 <td style="text-align:left;">
--0.0798
+-0.147
 </td>
 <td style="text-align:left;">
--0.0107
+-0.0192
 </td>
 <td style="text-align:left;">
-0.936
+0.883
 </td>
 </tr>
 <tr>
@@ -6665,13 +6688,13 @@ genderfemale:poly(Time, 2)1
 1.78
 </td>
 <td style="text-align:left;">
-0.882
+0.883
 </td>
 <td style="text-align:left;">
 0.042
 </td>
 <td style="text-align:left;">
-0.378
+0.377
 </td>
 </tr>
 <tr>
@@ -6679,7 +6702,7 @@ genderfemale:poly(Time, 2)1
 genderfemale:poly(Time, 2)2
 </td>
 <td style="text-align:left;">
--0.991
+-0.99
 </td>
 <td style="text-align:left;">
 1.78
@@ -6688,7 +6711,7 @@ genderfemale:poly(Time, 2)2
 -0.556
 </td>
 <td style="text-align:left;">
--0.0265
+-0.0264
 </td>
 <td style="text-align:left;">
 0.578
@@ -6708,7 +6731,7 @@ genderfemale:groupDEP:poly(Time, 2)1
 -0.926
 </td>
 <td style="text-align:left;">
--0.044
+-0.0441
 </td>
 <td style="text-align:left;">
 0.354
@@ -6731,7 +6754,7 @@ genderfemale:groupDEP:poly(Time, 2)2
 0.0798
 </td>
 <td style="text-align:left;">
-0.0934
+0.0935
 </td>
 </tr>
 </tbody>
@@ -8664,19 +8687,19 @@ pvalue
 (Intercept)
 </td>
 <td style="text-align:left;">
-0.356
+0.349
 </td>
 <td style="text-align:left;">
 0.163
 </td>
 <td style="text-align:left;">
-2.19
+2.15
 </td>
 <td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
-0.0287
+0.0318
 </td>
 </tr>
 <tr>
@@ -8684,19 +8707,19 @@ NA
 ANXPTSD_lifeANXPTSD
 </td>
 <td style="text-align:left;">
-0.239
+0.0824
 </td>
 <td style="text-align:left;">
-0.41
+0.141
 </td>
 <td style="text-align:left;">
-0.582
+0.586
 </td>
 <td style="text-align:left;">
-0.036
+0.0388
 </td>
 <td style="text-align:left;">
-0.56
+0.558
 </td>
 </tr>
 <tr>
@@ -8704,19 +8727,19 @@ ANXPTSD_lifeANXPTSD
 age_meancentered
 </td>
 <td style="text-align:left;">
-0.11
+0.111
 </td>
 <td style="text-align:left;">
 0.0705
 </td>
 <td style="text-align:left;">
-1.56
+1.57
 </td>
 <td style="text-align:left;">
 0.111
 </td>
 <td style="text-align:left;">
-0.118
+0.116
 </td>
 </tr>
 <tr>
@@ -8724,19 +8747,19 @@ age_meancentered
 BMI_meancentered
 </td>
 <td style="text-align:left;">
-0.0718
+0.0678
 </td>
 <td style="text-align:left;">
-0.062
+0.0619
 </td>
 <td style="text-align:left;">
-1.16
+1.1
 </td>
 <td style="text-align:left;">
-0.0715
+0.0675
 </td>
 <td style="text-align:left;">
-0.246
+0.273
 </td>
 </tr>
 <tr>
@@ -8744,19 +8767,19 @@ BMI_meancentered
 pubcatimp
 </td>
 <td style="text-align:left;">
-0.0996
+0.0993
 </td>
 <td style="text-align:left;">
 0.0839
 </td>
 <td style="text-align:left;">
-1.19
+1.18
 </td>
 <td style="text-align:left;">
-0.0984
+0.0982
 </td>
 <td style="text-align:left;">
-0.235
+0.236
 </td>
 </tr>
 <tr>
@@ -8764,19 +8787,19 @@ pubcatimp
 smoking_yes_nosmk
 </td>
 <td style="text-align:left;">
-0.0798
+0.102
 </td>
 <td style="text-align:left;">
-0.153
+0.15
 </td>
 <td style="text-align:left;">
-0.52
+0.679
 </td>
 <td style="text-align:left;">
-0.0337
+0.0429
 </td>
 <td style="text-align:left;">
-0.603
+0.497
 </td>
 </tr>
 <tr>
@@ -8790,13 +8813,13 @@ genderfemale
 0.211
 </td>
 <td style="text-align:left;">
--4.79
+-4.8
 </td>
 <td style="text-align:left;">
 -0.49
 </td>
 <td style="text-align:left;">
-1.63e-06
+1.57e-06
 </td>
 </tr>
 <tr>
@@ -8804,19 +8827,19 @@ genderfemale
 groupDEP
 </td>
 <td style="text-align:left;">
-0.552
+0.537
 </td>
 <td style="text-align:left;">
-0.199
+0.206
 </td>
 <td style="text-align:left;">
-2.77
+2.61
 </td>
 <td style="text-align:left;">
-0.272
+0.265
 </td>
 <td style="text-align:left;">
-0.00553
+0.00915
 </td>
 </tr>
 <tr>
@@ -8864,19 +8887,19 @@ poly(Time, 2)2
 genderfemale:groupDEP
 </td>
 <td style="text-align:left;">
--0.203
+-0.232
 </td>
 <td style="text-align:left;">
-0.251
+0.245
 </td>
 <td style="text-align:left;">
--0.809
+-0.943
 </td>
 <td style="text-align:left;">
--0.0979
+-0.112
 </td>
 <td style="text-align:left;">
-0.418
+0.345
 </td>
 </tr>
 <tr>
@@ -10929,19 +10952,19 @@ pvalue
 (Intercept)
 </td>
 <td style="text-align:left;">
-0.0104
+0.00239
 </td>
 <td style="text-align:left;">
-0.187
+0.185
 </td>
 <td style="text-align:left;">
-0.0557
+0.0129
 </td>
 <td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
-0.956
+0.99
 </td>
 </tr>
 <tr>
@@ -10949,19 +10972,19 @@ NA
 ANXPTSD_lifeANXPTSD
 </td>
 <td style="text-align:left;">
--0.0953
+0.257
 </td>
 <td style="text-align:left;">
-0.465
+0.159
 </td>
 <td style="text-align:left;">
--0.205
+1.62
 </td>
 <td style="text-align:left;">
--0.0145
+0.121
 </td>
 <td style="text-align:left;">
-0.838
+0.106
 </td>
 </tr>
 <tr>
@@ -10969,19 +10992,19 @@ ANXPTSD_lifeANXPTSD
 age_meancentered
 </td>
 <td style="text-align:left;">
--0.0932
+-0.0919
 </td>
 <td style="text-align:left;">
-0.0802
+0.0796
 </td>
 <td style="text-align:left;">
--1.16
+-1.15
 </td>
 <td style="text-align:left;">
--0.0935
+-0.0922
 </td>
 <td style="text-align:left;">
-0.245
+0.248
 </td>
 </tr>
 <tr>
@@ -10989,19 +11012,19 @@ age_meancentered
 BMI_meancentered
 </td>
 <td style="text-align:left;">
-0.0789
+0.0746
 </td>
 <td style="text-align:left;">
-0.0705
+0.0699
 </td>
 <td style="text-align:left;">
-1.12
+1.07
 </td>
 <td style="text-align:left;">
-0.0784
+0.0741
 </td>
 <td style="text-align:left;">
-0.263
+0.286
 </td>
 </tr>
 <tr>
@@ -11012,16 +11035,16 @@ pubcatimp
 -0.103
 </td>
 <td style="text-align:left;">
-0.0955
+0.0948
 </td>
 <td style="text-align:left;">
--1.07
+-1.09
 </td>
 <td style="text-align:left;">
 -0.101
 </td>
 <td style="text-align:left;">
-0.283
+0.278
 </td>
 </tr>
 <tr>
@@ -11029,19 +11052,19 @@ pubcatimp
 smoking_yes_nosmk
 </td>
 <td style="text-align:left;">
-0.0237
+0.0212
 </td>
 <td style="text-align:left;">
-0.174
+0.168
 </td>
 <td style="text-align:left;">
-0.136
+0.126
 </td>
 <td style="text-align:left;">
-0.0101
+0.009
 </td>
 <td style="text-align:left;">
-0.892
+0.9
 </td>
 </tr>
 <tr>
@@ -11049,19 +11072,19 @@ smoking_yes_nosmk
 genderfemale
 </td>
 <td style="text-align:left;">
--0.125
+-0.136
 </td>
 <td style="text-align:left;">
-0.241
+0.239
 </td>
 <td style="text-align:left;">
--0.52
+-0.567
 </td>
 <td style="text-align:left;">
--0.0604
+-0.0654
 </td>
 <td style="text-align:left;">
-0.603
+0.571
 </td>
 </tr>
 <tr>
@@ -11069,19 +11092,19 @@ genderfemale
 groupDEP
 </td>
 <td style="text-align:left;">
-0.368
+0.232
 </td>
 <td style="text-align:left;">
-0.228
+0.234
 </td>
 <td style="text-align:left;">
-1.61
+0.99
 </td>
 <td style="text-align:left;">
-0.181
+0.114
 </td>
 <td style="text-align:left;">
-0.107
+0.322
 </td>
 </tr>
 <tr>
@@ -11089,19 +11112,19 @@ groupDEP
 poly(Time, 2)1
 </td>
 <td style="text-align:left;">
-0.665
+0.679
 </td>
 <td style="text-align:left;">
 1.73
 </td>
 <td style="text-align:left;">
-0.385
+0.394
 </td>
 <td style="text-align:left;">
-0.0289
+0.0296
 </td>
 <td style="text-align:left;">
-0.7
+0.694
 </td>
 </tr>
 <tr>
@@ -11109,19 +11132,19 @@ poly(Time, 2)1
 poly(Time, 2)2
 </td>
 <td style="text-align:left;">
-3.4
+3.44
 </td>
 <td style="text-align:left;">
 1.71
 </td>
 <td style="text-align:left;">
-1.99
+2.01
 </td>
 <td style="text-align:left;">
-0.149
+0.151
 </td>
 <td style="text-align:left;">
-0.0469
+0.0445
 </td>
 </tr>
 <tr>
@@ -11129,19 +11152,19 @@ poly(Time, 2)2
 genderfemale:groupDEP
 </td>
 <td style="text-align:left;">
--0.307
+-0.286
 </td>
 <td style="text-align:left;">
-0.287
+0.278
 </td>
 <td style="text-align:left;">
--1.07
+-1.03
 </td>
 <td style="text-align:left;">
--0.148
+-0.138
 </td>
 <td style="text-align:left;">
-0.285
+0.304
 </td>
 </tr>
 <tr>
@@ -11149,19 +11172,19 @@ genderfemale:groupDEP
 groupDEP:poly(Time, 2)1
 </td>
 <td style="text-align:left;">
-1.19
+1.17
 </td>
 <td style="text-align:left;">
 2.23
 </td>
 <td style="text-align:left;">
-0.533
+0.523
 </td>
 <td style="text-align:left;">
-0.0399
+0.0391
 </td>
 <td style="text-align:left;">
-0.594
+0.601
 </td>
 </tr>
 <tr>
@@ -11169,19 +11192,19 @@ groupDEP:poly(Time, 2)1
 groupDEP:poly(Time, 2)2
 </td>
 <td style="text-align:left;">
-0.377
+0.334
 </td>
 <td style="text-align:left;">
 2.21
 </td>
 <td style="text-align:left;">
-0.171
+0.151
 </td>
 <td style="text-align:left;">
-0.0127
+0.0112
 </td>
 <td style="text-align:left;">
-0.865
+0.88
 </td>
 </tr>
 <tr>
@@ -11189,19 +11212,19 @@ groupDEP:poly(Time, 2)2
 genderfemale:poly(Time, 2)1
 </td>
 <td style="text-align:left;">
--1.76
+-1.79
 </td>
 <td style="text-align:left;">
 2.16
 </td>
 <td style="text-align:left;">
--0.816
+-0.831
 </td>
 <td style="text-align:left;">
--0.061
+-0.0621
 </td>
 <td style="text-align:left;">
-0.414
+0.406
 </td>
 </tr>
 <tr>
@@ -11209,19 +11232,19 @@ genderfemale:poly(Time, 2)1
 genderfemale:poly(Time, 2)2
 </td>
 <td style="text-align:left;">
-2.6
+2.57
 </td>
 <td style="text-align:left;">
 2.13
 </td>
 <td style="text-align:left;">
-1.22
+1.21
 </td>
 <td style="text-align:left;">
-0.0908
+0.0897
 </td>
 <td style="text-align:left;">
-0.222
+0.228
 </td>
 </tr>
 <tr>
@@ -11229,19 +11252,19 @@ genderfemale:poly(Time, 2)2
 genderfemale:groupDEP:poly(Time, 2)1
 </td>
 <td style="text-align:left;">
-1.62
+1.65
 </td>
 <td style="text-align:left;">
 2.79
 </td>
 <td style="text-align:left;">
-0.579
+0.592
 </td>
 <td style="text-align:left;">
-0.0431
+0.044
 </td>
 <td style="text-align:left;">
-0.562
+0.554
 </td>
 </tr>
 <tr>
@@ -11249,19 +11272,19 @@ genderfemale:groupDEP:poly(Time, 2)1
 genderfemale:groupDEP:poly(Time, 2)2
 </td>
 <td style="text-align:left;">
--4.98
+-4.95
 </td>
 <td style="text-align:left;">
 2.76
 </td>
 <td style="text-align:left;">
--1.8
+-1.79
 </td>
 <td style="text-align:left;">
--0.133
+-0.132
 </td>
 <td style="text-align:left;">
-0.0714
+0.0733
 </td>
 </tr>
 </tbody>
@@ -13194,10 +13217,10 @@ pvalue
 (Intercept)
 </td>
 <td style="text-align:left;">
--0.386
+-0.388
 </td>
 <td style="text-align:left;">
-0.237
+0.238
 </td>
 <td style="text-align:left;">
 -1.63
@@ -13214,19 +13237,19 @@ NA
 ANXPTSD_lifeANXPTSD
 </td>
 <td style="text-align:left;">
-0.347
+0.0033
 </td>
 <td style="text-align:left;">
-0.461
+0.165
 </td>
 <td style="text-align:left;">
-0.753
+0.02
 </td>
 <td style="text-align:left;">
-0.0589
+0.00162
 </td>
 <td style="text-align:left;">
-0.452
+0.984
 </td>
 </tr>
 <tr>
@@ -13234,19 +13257,19 @@ ANXPTSD_lifeANXPTSD
 age_meancentered
 </td>
 <td style="text-align:left;">
--0.0162
+-0.016
 </td>
 <td style="text-align:left;">
-0.0893
+0.0895
 </td>
 <td style="text-align:left;">
--0.181
+-0.179
 </td>
 <td style="text-align:left;">
--0.0162
+-0.016
 </td>
 <td style="text-align:left;">
-0.856
+0.858
 </td>
 </tr>
 <tr>
@@ -13254,19 +13277,19 @@ age_meancentered
 BMI_meancentered
 </td>
 <td style="text-align:left;">
-0.0498
+0.0438
 </td>
 <td style="text-align:left;">
-0.0723
+0.0724
 </td>
 <td style="text-align:left;">
-0.688
+0.605
 </td>
 <td style="text-align:left;">
-0.054
+0.0475
 </td>
 <td style="text-align:left;">
-0.491
+0.545
 </td>
 </tr>
 <tr>
@@ -13274,19 +13297,19 @@ BMI_meancentered
 pubcatimp
 </td>
 <td style="text-align:left;">
--0.0128
+-0.01
 </td>
 <td style="text-align:left;">
 0.11
 </td>
 <td style="text-align:left;">
--0.117
+-0.091
 </td>
 <td style="text-align:left;">
--0.0129
+-0.0101
 </td>
 <td style="text-align:left;">
-0.907
+0.927
 </td>
 </tr>
 <tr>
@@ -13294,19 +13317,19 @@ pubcatimp
 smoking_yes_nosmk
 </td>
 <td style="text-align:left;">
-0.0743
+0.111
 </td>
 <td style="text-align:left;">
-0.19
+0.184
 </td>
 <td style="text-align:left;">
-0.391
+0.602
 </td>
 <td style="text-align:left;">
-0.0313
+0.0467
 </td>
 <td style="text-align:left;">
-0.695
+0.547
 </td>
 </tr>
 <tr>
@@ -13314,19 +13337,19 @@ smoking_yes_nosmk
 genderfemale
 </td>
 <td style="text-align:left;">
-0.648
+0.645
 </td>
 <td style="text-align:left;">
-0.3
+0.301
 </td>
 <td style="text-align:left;">
-2.16
+2.14
 </td>
 <td style="text-align:left;">
-0.313
+0.312
 </td>
 <td style="text-align:left;">
-0.0309
+0.0323
 </td>
 </tr>
 <tr>
@@ -13334,19 +13357,19 @@ genderfemale
 groupDEP
 </td>
 <td style="text-align:left;">
-0.208
+0.245
 </td>
 <td style="text-align:left;">
-0.269
+0.274
 </td>
 <td style="text-align:left;">
-0.775
+0.894
 </td>
 <td style="text-align:left;">
-0.0965
+0.113
 </td>
 <td style="text-align:left;">
-0.438
+0.372
 </td>
 </tr>
 <tr>
@@ -13394,19 +13417,19 @@ poly(Time, 2)2
 genderfemale:groupDEP
 </td>
 <td style="text-align:left;">
--0.456
+-0.504
 </td>
 <td style="text-align:left;">
-0.331
+0.326
 </td>
 <td style="text-align:left;">
--1.38
+-1.55
 </td>
 <td style="text-align:left;">
--0.226
+-0.25
 </td>
 <td style="text-align:left;">
-0.169
+0.122
 </td>
 </tr>
 <tr>
