@@ -131,6 +131,9 @@ Respiration_Rate = c(Respiration_Rate_bpm.2=1,
           Respiration_Rate_bpm.6=5, 
           Respiration_Rate_bpm.7=6) 
 
+
+
+
 Sensvar = c("DIKJ_RW", #replaces group
             "group_mANXPTSD_life", #replaces group
             "group_oANXPTSD_life", #replaces group
@@ -152,19 +155,30 @@ AV_HR = c(Average_HR_bpm.2=1,
           Average_HR_bpm.6=5, 
           Average_HR_bpm.7=6), 
 
-AV_RSA = c(RSA0_msec.2=1, 
-          RSA0_msec.3=2, 
-          RSA0_msec.4=3, 
-          RSA0_msec.5=4, 
-          RSA0_msec.6=5, 
-          RSA0_msec.7=6), 
+AV_RSA = c(RSA_2_trans=1, 
+          RSA_3_trans=2, 
+          RSA_4_trans=3, 
+          RSA_5_trans=4, 
+          RSA_6_trans=5, 
+          RSA_7_trans=6), 
 
-AV_PEP = c(PEP_msec.2=1, 
-          PEP_msec.3=2, 
-          PEP_msec.4=3, 
-          PEP_msec.5=4, 
-          PEP_msec.6=5, 
-          PEP_msec.7=6))
+AV_PEP = c(PEP_2_trans=1, 
+          PEP_3_trans=2, 
+          PEP_4_trans=3, 
+          PEP_5_trans=4, 
+          PEP_6_trans=5, 
+          PEP_7_trans=6))
+
+
+#filter PEP
+attach(df_ANS)
+df_ANS$PEP_2_trans[PEP_2_trans <= 2]=NA 
+df_ANS$PEP_3_trans[PEP_3_trans <= 2]=NA 
+df_ANS$PEP_4_trans[PEP_4_trans <= 2]=NA 
+df_ANS$PEP_5_trans[PEP_5_trans <= 2]=NA 
+df_ANS$PEP_6_trans[PEP_6_trans <= 1]=NA 
+df_ANS$PEP_7_trans[PEP_7_trans <= 2]=NA 
+detach(df_ANS)
 
 vartoplot = c(UV, Sensvar, names(Respiration_Rate))
 tmpframe = df_ANS[,vartoplot[!vartoplot %in% c("centre")]] %>% gather(key = "value", value = "RespirationRate", all_of(names(Respiration_Rate)))
@@ -278,12 +292,13 @@ for (depvar in names(AV)){
   cols =  names(AV[[depvar]])
   long = df_ANS[,c("twuid",cols, UV, Sensvar)] %>% 
     gather(key = "value", value = "DV", all_of(cols))
-  if(depvar =="AV_RSA"){ long$RespirationRate = tmpframe$RespirationRate}
+  if(depvar =="AV_RSA"){ 
+    long$RespirationRate = tmpframe$RespirationRate}
   long$twuid = as.factor(long$twuid)
   long2  = long%>% mutate_if(is.numeric, scale)
   long2$Time = AV[[depvar]][long2$value]
   long2$value =as.factor(long2$value) %>% 
-    relevel(., ref=grep("\\.2|stressed_1",  unique(long2$value),value = T))
+    relevel(., ref=grep("\\.2|_2_|stressed_1",  unique(long2$value),value = T))
   model.lme = lme4::lmer(models[[depvar]], data=long2)
   model.lme0 = lme4::lmer(DV~1+(1|twuid), data=long2)
   anovah0 = anova(model.lme0, model.lme)
