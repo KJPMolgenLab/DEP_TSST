@@ -42,7 +42,7 @@ home = getwd()
 **IV of no interest :** 
 
 * Age scaled ("age_meancentered")
-* pubertal status ("pubcatimp")
+* pubertal status ("pubcatimp_meancentered")
 * "BMI_meancentered" #not in model * "stressed"
 * "smoking_yes_no" #not in model * "stressed"
 * "sports_meancentered"  #not in model * "stressed"
@@ -120,7 +120,7 @@ df_ANS$smoking_yes_no = drop(factor(df_ANS$smoking_yes_no, levels = c(0,1),
                                 labels=c("no_smk", "smk")))%>% relevel(., ref="no_smk")
 
 
-UV = c("age_meancentered", "BMI_meancentered", "pubcatimp",
+UV = c("age_meancentered", "BMI_meancentered", "pubcatimp_meancentered",
        "smoking_yes_no", "gender", "group", "sports_meancentered")
 
 
@@ -244,34 +244,34 @@ varint_nogen_mAnxPTSD ="mANXPTSD+poly(Time, 2)+poly(Time, 2)*mANXPTSD+(1|twuid)"
 
 
 models=list(
-  AV_stressed = paste0("DV~1+age_meancentered+pubcatimp+",varint),
-  AV_HR=paste0("DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+",varint),
-  AV_RSA=paste0("DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+",varint),
-  AV_PEP=paste0("DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+",varint))
+  AV_stressed = paste0("DV~1+age_meancentered+pubcatimp_meancentered+",varint),
+  AV_HR=paste0("DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+",varint),
+  AV_RSA=paste0("DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+",varint),
+  AV_PEP=paste0("DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+",varint))
 
 models.nogen=list(
-  AV_stressed = paste0("DV~1+age_meancentered+pubcatimp+",varint_nogen),
-  AV_HR=paste0("DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+",varint_nogen),
-  AV_RSA=paste0("DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+",varint_nogen),
-  AV_PEP=paste0("DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+",varint_nogen))
+  AV_stressed = paste0("DV~1+age_meancentered+pubcatimp_meancentered+",varint_nogen),
+  AV_HR=paste0("DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+",varint_nogen),
+  AV_RSA=paste0("DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+",varint_nogen),
+  AV_PEP=paste0("DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+",varint_nogen))
 
 models.quant=list(
-  AV_stressed = paste0("DV~1+age_meancentered+pubcatimp+",varintq),
-  AV_HR=paste0("DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+",varintq),
-  AV_RSA=paste0("DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+",varintq),
-  AV_PEP=paste0("DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+",varintq))
+  AV_stressed = paste0("DV~1+age_meancentered+pubcatimp_meancentered+",varintq),
+  AV_HR=paste0("DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+",varintq),
+  AV_RSA=paste0("DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+",varintq),
+  AV_PEP=paste0("DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+",varintq))
 
 models.oAnxPTSD=list(
-  AV_stressed = paste0("DV~1+age_meancentered+pubcatimp+",varint_oAnxPTSD),
-  AV_HR=paste0("DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+",varint_oAnxPTSD),
-  AV_RSA=paste0("DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+",varint_oAnxPTSD),
-  AV_PEP=paste0("DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+",varint_oAnxPTSD))
+  AV_stressed = paste0("DV~1+age_meancentered+pubcatimp_meancentered+",varint_oAnxPTSD),
+  AV_HR=paste0("DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+",varint_oAnxPTSD),
+  AV_RSA=paste0("DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+",varint_oAnxPTSD),
+  AV_PEP=paste0("DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+",varint_oAnxPTSD))
 
 models.mAnxPTSD=list(
-  AV_stressed = paste0("DV~1+age_meancentered+pubcatimp+",varint_mAnxPTSD),
-  AV_HR=paste0("DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+",varint_mAnxPTSD),
-  AV_RSA=paste0("DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+",varint_mAnxPTSD),
-  AV_PEP=paste0("DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+",varint_mAnxPTSD))
+  AV_stressed = paste0("DV~1+age_meancentered+pubcatimp_meancentered+",varint_mAnxPTSD),
+  AV_HR=paste0("DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+",varint_mAnxPTSD),
+  AV_RSA=paste0("DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+",varint_mAnxPTSD),
+  AV_PEP=paste0("DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+",varint_mAnxPTSD))
 
 
 ```

@@ -42,7 +42,7 @@ home = getwd()
 **IV of no interest :** 
 
 * Age scaled ("age_meancentered")
-* pubertal status ("pubcatimp")
+* pubertal status ("pubcatimp_meancentered")
 * "BMI_meancentered" #not in model * "stressed"
 * "smoking_yes_no" #not in model * "stressed"
 
@@ -94,6 +94,7 @@ home = getwd()
 
 df_ENDO = as.data.frame(read_sav(paste0(home,"/data/DEPHC_GU_DeskriptTSSThormones_175_final.sav")))
 
+df_ENDO<-df_ENDO %>% rename(CORT_40_log=CORT_44_log)
 
 df_ENDO$gender = drop(factor(df_ENDO$gender, levels = c(1,2), 
                         labels=c("female", "male")))%>% relevel(., ref="male")
@@ -131,7 +132,7 @@ df_ENDO$TESTCORTlog55 = log(df_ENDO$TEST_55_log/df_ENDO$CORT_55_log)
 df_ENDO$TESTCORTlog55[is.infinite(df_ENDO$TESTCORTlog55)] = NA
 
 
-UV = c("age_meancentered", "BMI_meancentered", "pubcatimp",
+UV = c("age_meancentered", "BMI_meancentered", "pubcatimp_meancentered",
        #"any_med_ccept", 
        "smoking_yes_no", "gender", "group")
 
@@ -147,8 +148,7 @@ AV_stressed = c(stressed_1=0, stressed_2=2,
                 stressed_5=25, stressed_6=40, 
                 stressed_7=55, stressed_8=70), 
 
-# ?? why is it named CORT44 here?
-AV_CORT = c(CORT_BL_log=0, CORT_10_log=25, CORT_25_log=40, CORT_44_log=55, CORT_55_log=70) ,
+AV_CORT = c(CORT_BL_log=0, CORT_10_log=25, CORT_25_log=40, CORT_40_log=55, CORT_55_log=70) ,
 AV_TEST = c(TEST_BL_log=0, TEST_10_log=25, TEST_55_log=70),
 AV_TESTCORT = c(TESTCORTlogBL = 0, TESTCORTlog10=25, TESTCORTlog55 = 70),
 AV_OXT =  c(OXT_BL_log=0, OXT_1_log=16, OXT_10_log=25))
@@ -203,19 +203,19 @@ no site effect included as all samples where from Frankfurt
 
 ```{r modeldef_poly}
 
-bio.model = "DV~1+age_meancentered+BMI_meancentered+pubcatimp+smoking_yes_no+gender+group+poly(Time, 2)+gender*group+poly(Time, 2)*group+gender*poly(Time, 2)*group+(1|twuid)"
+bio.model = "DV~1+age_meancentered+BMI_meancentered+pubcatimp_meancentered+smoking_yes_no+gender+group+poly(Time, 2)+gender*group+poly(Time, 2)*group+gender*poly(Time, 2)*group+(1|twuid)"
 
-psych.model = "DV~1+age_meancentered+pubcatimp+gender+group+poly(Time, 2)+gender*group+poly(Time, 2)*group+gender*poly(Time, 2)*group+(1|twuid)"
-
-
-bio.model.nogen = "DV~1+age_meancentered+BMI_meancentered+pubcatimp+smoking_yes_no+group+poly(Time, 2)+poly(Time, 2)*group+(1|twuid)"
-
-psych.model.nogen = "DV~1+age_meancentered+pubcatimp+group+poly(Time, 2)+poly(Time, 2)*group+(1|twuid)"
+psych.model = "DV~1+age_meancentered+pubcatimp_meancentered+gender+group+poly(Time, 2)+gender*group+poly(Time, 2)*group+gender*poly(Time, 2)*group+(1|twuid)"
 
 
-bio.model.quantcd = "DV~1+age_meancentered+BMI_meancentered+pubcatimp+smoking_yes_no+gender+DIKJ_RW+poly(Time, 2)+gender*DIKJ_RW+poly(Time, 2)*DIKJ_RW+gender*poly(Time, 2)*DIKJ_RW+(1|twuid)"
+bio.model.nogen = "DV~1+age_meancentered+BMI_meancentered+pubcatimp_meancentered+smoking_yes_no+group+poly(Time, 2)+poly(Time, 2)*group+(1|twuid)"
 
-psych.model.quantcd = "DV~1+age_meancentered+pubcatimp+gender+DIKJ_RW+poly(Time, 2)+gender*DIKJ_RW+poly(Time, 2)*DIKJ_RW+gender*poly(Time, 2)*DIKJ_RW+(1|twuid)"
+psych.model.nogen = "DV~1+age_meancentered+pubcatimp_meancentered+group+poly(Time, 2)+poly(Time, 2)*group+(1|twuid)"
+
+
+bio.model.quantcd = "DV~1+age_meancentered+BMI_meancentered+pubcatimp_meancentered+smoking_yes_no+gender+DIKJ_RW+poly(Time, 2)+gender*DIKJ_RW+poly(Time, 2)*DIKJ_RW+gender*poly(Time, 2)*DIKJ_RW+(1|twuid)"
+
+psych.model.quantcd = "DV~1+age_meancentered+pubcatimp_meancentered+gender+DIKJ_RW+poly(Time, 2)+gender*DIKJ_RW+poly(Time, 2)*DIKJ_RW+gender*poly(Time, 2)*DIKJ_RW+(1|twuid)"
 
 
 models=list(

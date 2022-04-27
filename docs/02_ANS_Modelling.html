@@ -364,7 +364,7 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -373,7 +373,7 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -385,7 +385,7 @@ div.tocify {
 <strong>Last updated:</strong> 2022-04-27
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>S://KJP_Biolabor/Projects/FemNAT-CD/DEP_TSST/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -401,12 +401,12 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -473,16 +473,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPTSSTtree7701a172159865c7169e741ce0f3d10d1d3126c4targetblank7701a17a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/DEP_TSST/tree/7701a172159865c7169e741ce0f3d10d1d3126c4" target="_blank">7701a17</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPTSSTtree24d71c50aae29149fb0320ab6a5bb86cda1ef487targetblank24d71c5a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/DEP_TSST/tree/24d71c50aae29149fb0320ab6a5bb86cda1ef487" target="_blank">24d71c5</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPTSSTtree7701a172159865c7169e741ce0f3d10d1d3126c4targetblank7701a17a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPTSSTtree24d71c50aae29149fb0320ab6a5bb86cda1ef487targetblank24d71c5a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/DEP_TSST/tree/7701a172159865c7169e741ce0f3d10d1d3126c4" target="_blank">7701a17</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/DEP_TSST/tree/24d71c50aae29149fb0320ab6a5bb86cda1ef487" target="_blank">24d71c5</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -500,6 +500,8 @@ Untracked files:
 
 Unstaged changes:
     Modified:   _workflowr.yml
+    Modified:   analysis/01_ENDO_Modelling.Rmd
+    Modified:   analysis/02_ANS_Modelling.Rmd
 
 </code></pre>
 <p>
@@ -533,7 +535,7 @@ There are no past versions. Publish this analysis with <code>wflow_publish()</co
 <p><strong>IV of no interest :</strong></p>
 <ul>
 <li>Age scaled (“age_meancentered”)</li>
-<li>pubertal status (“pubcatimp”)</li>
+<li>pubertal status (“pubcatimp_meancentered”)</li>
 <li>“BMI_meancentered” #not in model * “stressed”</li>
 <li>“smoking_yes_no” #not in model * “stressed”</li>
 <li>“sports_meancentered” #not in model * “stressed”</li>
@@ -604,7 +606,7 @@ df_ANS$smoking_yes_no = drop(factor(df_ANS$smoking_yes_no, levels = c(0,1),
                                 labels=c(&quot;no_smk&quot;, &quot;smk&quot;)))%&gt;% relevel(., ref=&quot;no_smk&quot;)
 
 
-UV = c(&quot;age_meancentered&quot;, &quot;BMI_meancentered&quot;, &quot;pubcatimp&quot;,
+UV = c(&quot;age_meancentered&quot;, &quot;BMI_meancentered&quot;, &quot;pubcatimp_meancentered&quot;,
        &quot;smoking_yes_no&quot;, &quot;gender&quot;, &quot;group&quot;, &quot;sports_meancentered&quot;)
 
 
@@ -743,13 +745,13 @@ BMI_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:center;">
-3.86 (0.62)
+-0.12 (0.62)
 </td>
 <td style="text-align:center;">
-4.07 (0.59)
+0.09 (0.59)
 </td>
 <td style="text-align:center;">
 0.026
@@ -1568,13 +1570,13 @@ BMI_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:center;">
-3.44 (0.51)
+-0.54 (0.51)
 </td>
 <td style="text-align:center;">
-3.72 (0.55)
+-0.26 (0.55)
 </td>
 <td style="text-align:center;">
 0.036
@@ -2286,13 +2288,13 @@ BMI_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:center;">
-4.12 (0.54)
+0.14 (0.54)
 </td>
 <td style="text-align:center;">
-4.30 (0.50)
+0.32 (0.50)
 </td>
 <td style="text-align:center;">
 0.083
@@ -2951,34 +2953,34 @@ varint_nogen_mAnxPTSD =&quot;mANXPTSD+poly(Time, 2)+poly(Time, 2)*mANXPTSD+(1|tw
 
 
 models=list(
-  AV_stressed = paste0(&quot;DV~1+age_meancentered+pubcatimp+&quot;,varint),
-  AV_HR=paste0(&quot;DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varint),
-  AV_RSA=paste0(&quot;DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+&quot;,varint),
-  AV_PEP=paste0(&quot;DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varint))
+  AV_stressed = paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+&quot;,varint),
+  AV_HR=paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varint),
+  AV_RSA=paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+&quot;,varint),
+  AV_PEP=paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varint))
 
 models.nogen=list(
-  AV_stressed = paste0(&quot;DV~1+age_meancentered+pubcatimp+&quot;,varint_nogen),
-  AV_HR=paste0(&quot;DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varint_nogen),
-  AV_RSA=paste0(&quot;DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+&quot;,varint_nogen),
-  AV_PEP=paste0(&quot;DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varint_nogen))
+  AV_stressed = paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+&quot;,varint_nogen),
+  AV_HR=paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varint_nogen),
+  AV_RSA=paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+&quot;,varint_nogen),
+  AV_PEP=paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varint_nogen))
 
 models.quant=list(
-  AV_stressed = paste0(&quot;DV~1+age_meancentered+pubcatimp+&quot;,varintq),
-  AV_HR=paste0(&quot;DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varintq),
-  AV_RSA=paste0(&quot;DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+&quot;,varintq),
-  AV_PEP=paste0(&quot;DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varintq))
+  AV_stressed = paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+&quot;,varintq),
+  AV_HR=paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varintq),
+  AV_RSA=paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+&quot;,varintq),
+  AV_PEP=paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varintq))
 
 models.oAnxPTSD=list(
-  AV_stressed = paste0(&quot;DV~1+age_meancentered+pubcatimp+&quot;,varint_oAnxPTSD),
-  AV_HR=paste0(&quot;DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varint_oAnxPTSD),
-  AV_RSA=paste0(&quot;DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+&quot;,varint_oAnxPTSD),
-  AV_PEP=paste0(&quot;DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varint_oAnxPTSD))
+  AV_stressed = paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+&quot;,varint_oAnxPTSD),
+  AV_HR=paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varint_oAnxPTSD),
+  AV_RSA=paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+&quot;,varint_oAnxPTSD),
+  AV_PEP=paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varint_oAnxPTSD))
 
 models.mAnxPTSD=list(
-  AV_stressed = paste0(&quot;DV~1+age_meancentered+pubcatimp+&quot;,varint_mAnxPTSD),
-  AV_HR=paste0(&quot;DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varint_mAnxPTSD),
-  AV_RSA=paste0(&quot;DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+&quot;,varint_mAnxPTSD),
-  AV_PEP=paste0(&quot;DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varint_mAnxPTSD))</code></pre>
+  AV_stressed = paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+&quot;,varint_mAnxPTSD),
+  AV_HR=paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varint_mAnxPTSD),
+  AV_RSA=paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+&quot;,varint_mAnxPTSD),
+  AV_PEP=paste0(&quot;DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+&quot;,varint_mAnxPTSD))</code></pre>
 <pre class="r"><code>lm.beta.lmer &lt;- function(mod) {
    b &lt;- fixef(mod)[-1]
    sd.x &lt;- apply(getME(mod,&quot;X&quot;)[,-1],2,sd)
@@ -3092,7 +3094,7 @@ fixed-effect model matrix is rank deficient so dropping 1 column / coefficient</
 <h2>Results</h2>
 <div id="stressed" class="section level3">
 <h3>stressed</h3>
-<p>full models: DV~1+age_meancentered+pubcatimp+gender+group+poly(Time, 2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time, 2)</em>group+(1|twuid)</p>
+<p>full models: DV~1+age_meancentered+pubcatimp_meancentered+gender+group+poly(Time, 2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time, 2)</em>group+(1|twuid)</p>
 <p>h0 model: DV~1+(1|twuid):</p>
 <p>overall model p-value:9.17e-82</p>
 <pre class="r"><code>depvar = &quot;AV_stressed&quot;
@@ -3175,7 +3177,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 0.0858
@@ -3481,7 +3483,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 0.053
@@ -3807,7 +3809,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 0.202
@@ -4113,7 +4115,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.0371
@@ -4399,7 +4401,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 0.324
@@ -4585,7 +4587,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.0718
@@ -4791,7 +4793,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 0.0867
@@ -5117,7 +5119,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 0.0879
@@ -5443,7 +5445,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 0.0829
@@ -5686,7 +5688,7 @@ genderfemale:groupDEP:poly(Time, 2)2
 </div>
 <div id="heartrate" class="section level3">
 <h3>Heartrate</h3>
-<p>full models: DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+gender+group+poly(Time, 2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time, 2)</em>group+(1|twuid)</p>
+<p>full models: DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+gender+group+poly(Time, 2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time, 2)</em>group+(1|twuid)</p>
 <p>h0 model: DV~1+(1|twuid):</p>
 <p>overall model p-value:5.2e-15</p>
 <pre class="r"><code>depvar = &quot;AV_HR&quot;
@@ -5769,7 +5771,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 0.128
@@ -6135,7 +6137,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 0.136
@@ -6521,7 +6523,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 0.135
@@ -6887,7 +6889,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 0.157
@@ -7233,7 +7235,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 0.156
@@ -7479,7 +7481,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 0.0936
@@ -7745,7 +7747,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 0.129
@@ -8131,7 +8133,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 0.13
@@ -8517,7 +8519,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 0.129
@@ -8820,7 +8822,7 @@ genderfemale:groupDEP:poly(Time, 2)2
 </div>
 <div id="respiratory-sinus-arrhythmia" class="section level3">
 <h3>Respiratory Sinus Arrhythmia</h3>
-<p>full models: DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+gender+group+poly(Time, 2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time, 2)</em>group+(1|twuid)</p>
+<p>full models: DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+RespirationRate+gender+group+poly(Time, 2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time, 2)</em>group+(1|twuid)</p>
 <p>h0 model: DV~1+(1|twuid):</p>
 <p>overall model p-value:5.08e-57</p>
 <pre class="r"><code>depvar = &quot;AV_RSA&quot;
@@ -8903,7 +8905,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.152
@@ -9289,7 +9291,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.171
@@ -9695,7 +9697,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.163
@@ -10081,7 +10083,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.147
@@ -10447,7 +10449,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.185
@@ -10713,7 +10715,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.109
@@ -10999,7 +11001,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.152
@@ -11405,7 +11407,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.154
@@ -11811,7 +11813,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.153
@@ -12134,7 +12136,7 @@ genderfemale:groupDEP:poly(Time, 2)2
 </div>
 <div id="pre-ejection-period" class="section level3">
 <h3>Pre-ejection period</h3>
-<p>full models: DV~1+age_meancentered+pubcatimp+BMI_meancentered+smoking_yes_no+sports_meancentered+gender+group+poly(Time, 2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time, 2)</em>group+(1|twuid)</p>
+<p>full models: DV~1+age_meancentered+pubcatimp_meancentered+BMI_meancentered+smoking_yes_no+sports_meancentered+gender+group+poly(Time, 2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time, 2)</em>group+(1|twuid)</p>
 <p>h0 model: DV~1+(1|twuid):</p>
 <p>overall model p-value:0.000426</p>
 <pre class="r"><code>depvar = &quot;AV_PEP&quot;
@@ -12217,7 +12219,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.164
@@ -12583,7 +12585,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.169
@@ -12969,7 +12971,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.162
@@ -13335,7 +13337,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.121
@@ -13681,7 +13683,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.187
@@ -13927,7 +13929,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.213
@@ -14193,7 +14195,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.159
@@ -14579,7 +14581,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.166
@@ -14965,7 +14967,7 @@ age_meancentered
 </tr>
 <tr>
 <td style="text-align:left;">
-pubcatimp
+pubcatimp_meancentered
 </td>
 <td style="text-align:left;">
 -0.164
