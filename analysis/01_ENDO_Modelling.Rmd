@@ -107,7 +107,7 @@ df_ENDO$ADHD_life = drop(factor(df_ENDO$ADHD_life, levels = c(0,1),
 df_ENDO$Eat_life = drop(factor(df_ENDO$Eat_life, levels = c(0,1), 
                                labels=c("no_EatDis", "EatDis")))%>% relevel(., ref="no_EatDis")
 
-df_ENDO$ANXPTSD_life = drop(factor(df_ENDO$SUD_life, levels = c(0,1), 
+df_ENDO$ANXPTSD_life = drop(factor(df_ENDO$ANXPTSD_life, levels = c(0,1), 
                                labels=c("no_ANXPTSD", "ANXPTSD")))%>% relevel(., ref="no_ANXPTSD")
 
 df_ENDO$any_med_ccept = drop(factor(df_ENDO$any_med_ccept, levels = c(0,1), 

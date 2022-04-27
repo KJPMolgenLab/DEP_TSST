@@ -27,5 +27,167 @@ home = getwd()
 ```
 
 
-# IN PROGRESS
+# Prepare
+
+## Definitions
+
+
+**DV:**
+
+* psychologischer Stress („stressed")
+* Average_HR_bpm
+* RSA_*_trans
+* PEP_*_trans # inclusion PEP_6_trans >1 all other >2 # 
+
+**IV of no interest :** 
+
+* Age scaled ("age_meancentered")
+* pubertal status ("pubcatimp")
+* "BMI_meancentered" #not in model * "stressed"
+* "smoking_yes_no" #not in model * "stressed"
+* "sports_meancentered"  #not in model * "stressed"
+* Respiration_*_trans #only in model RSA
+
+
+**IV of interest :**
+
+* Gruppe ("group") = 2-Faktor HC vs DEP [Dep ist mit 3, HCs mit 2 kodiert]
+* sex ("gender")
+* Zeitpunkt ("Time") with 2xpolynomes
+* Gruppe x Zeitpunkt(Time each poly)
+* Gruppe x sex
+* Gruppe x sex x Zeitpunkt(Time each poly)
+
+
+**random effects**
+
+* individual id
+
+
+**sensitivity check 1**
+
+* quantitative DEP "DIKJ_RW" [instead of group]
+* gender 
+
+
+**sensitivity check 2**
+
+* ADHD lifetime diagnosis "ADHD_life"
+* Essstörung "Eat_life"
+* kombinierte ANX/PTSD "ANXPTSD_life"
+
+
+**not included parameters**
+
+* Medication (was included here)
+* IQ
+* Parental education
+* Depression lifetime diagnosis
+* PTSD lifetime diagnosis
+* SUD lifetime diagnosis
+* Anxiety lifetime diagnosis
+* explstart_meancentered_min
+
+## read and check data 
+
+
+```{r preprocess, fig.height=10, fig.width=10}
+
+df_ANS = as.data.frame(read_sav(paste0(home,"/data/DEPHC_GU_DeskriptTSST_VUAMS_N=170 (175-5Dep).sav")))
+
+
+df_ANS$gender = drop(factor(df_ANS$gender, levels = c(1,2), 
+                        labels=c("female", "male")))%>% relevel(., ref="male")
+
+
+df_ANS$group = drop(factor(df_ANS$group, levels = c(2,3), labels=c("HC","DEP"))) %>% relevel(., ref="HC")
+df_ANS$group = drop(factor(df_ANS$group_oANXPTSD_life, levels = c(2,3), labels=c("HC","DEP"))) %>% relevel(., ref="HC")
+df_ANS$group = drop(factor(df_ANS$group, levels = c(2,3), labels=c("HC","DEP"))) %>% relevel(., ref="HC")
+df_ANS$group = drop(factor(df_ANS$group, levels = c(2,3), labels=c("HC","DEP"))) %>% relevel(., ref="HC")
+
+df_ANS$twuid = as.factor(df_ANS$twuid)
+df_ANS$ADHD_life = drop(factor(df_ANS$ADHD_life, levels = c(0,1), 
+                               labels=c("no_ADHD", "ADHD")))%>% relevel(., ref="no_ADHD")
+
+df_ANS$Eat_life = drop(factor(df_ANS$Eat_life, levels = c(0,1), 
+                               labels=c("no_EatDis", "EatDis")))%>% relevel(., ref="no_EatDis")
+
+df_ANS$ANXPTSD_life = drop(factor(df_ANS$ANXPTSD_life, levels = c(0,1), 
+                               labels=c("no_ANXPTSD", "ANXPTSD")))%>% relevel(., ref="no_ANXPTSD")
+
+
+df_ENDO$smoking_yes_no = drop(factor(df_ENDO$smoking_yes_no, levels = c(0,1), 
+                                labels=c("no_smk", "smk")))%>% relevel(., ref="no_smk")
+
+
+UV = c("age_meancentered", "BMI_meancentered", "pubcatimp",
+       "smoking_yes_no", "gender", "group", "sports_meancentered")
+
+
+Respiration_Rate = c(Respiration_Rate_bpm.2=1, 
+          Respiration_Rate_bpm.3=2, 
+          Respiration_Rate_bpm.4=3, 
+          Respiration_Rate_bpm.5=4, 
+          Respiration_Rate_bpm.6=5, 
+          Respiration_Rate_bpm.7=6) 
+
+Sensvar = c("DIKJ_RW", 
+            "group_mANXPTSD_life", 
+            "group_oANXPTSD_life",
+           "ADHD_life",
+           "Eat_life",
+           "ANXPTSD_life")
+
+
+AV = list(
+AV_stressed = c(stressed_1=0, stressed_2=2,
+                stressed_3=10, stressed_4=16,
+                stressed_5=25, stressed_6=40, 
+                stressed_7=55, stressed_8=70), 
+
+AV_HR = c(Average_HR_bpm.2=1, 
+          Average_HR_bpm.3=2, 
+          Average_HR_bpm.4=3, 
+          Average_HR_bpm.5=4, 
+          Average_HR_bpm.6=5, 
+          Average_HR_bpm.7=6), 
+
+AV_RSA = c(RSA0_msec.2=1, 
+          RSA0_msec.3=2, 
+          RSA0_msec.4=3, 
+          RSA0_msec.5=4, 
+          RSA0_msec.6=5, 
+          RSA0_msec.7=6), 
+
+AV_PEP = c(PEP_msec.2=1, 
+          PEP_msec.3=2, 
+          PEP_msec.4=3, 
+          PEP_msec.5=4, 
+          PEP_msec.6=5, 
+          PEP_msec.7=6))
+
+vartoplot = c(UV, Sensvar, names(Respiration_Rate))
+tmpframe = df_ANS[,vartoplot[!vartoplot %in% c("centre")]] %>% gather(key = "value", value = "RespirationRate", all_of(names(Respiration_Rate)))
+
+tmpframe=tmpframe %>% 
+  mutate_if(is.factor, function(x) as.numeric(x)-1) %>% select(-value)
+
+corrplot::corrplot(cor(tmpframe, use = "pairwise"))
+
+```
+
+
+
+## complete cohort descriptives
+
+```{r preprocess_allstat}
+
+vars=c(UV, names(Respiration_Rate), unlist(lapply(AV, names)), Sensvar)
+
+res = compareGroups(group~., data = df_ANS[,vars])
+#summary(res)
+export_table <- createTable(res)
+export2md(export_table)
+
+```
 
