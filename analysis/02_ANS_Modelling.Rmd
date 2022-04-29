@@ -124,12 +124,12 @@ UV = c("age_meancentered", "BMI_meancentered", "pubcatimp_meancentered",
        "smoking_yes_no", "gender", "group", "sports_meancentered")
 
 
-Respiration_Rate = c(Respiration_Rate_bpm.2=1, 
-          Respiration_Rate_bpm.3=2, 
-          Respiration_Rate_bpm.4=3, 
-          Respiration_Rate_bpm.5=4, 
-          Respiration_Rate_bpm.6=5, 
-          Respiration_Rate_bpm.7=6) 
+Respiration_Rate = c(Respiration_2_trans=1, 
+          Respiration_3_trans=2, 
+          Respiration_4_trans=3, 
+          Respiration_5_trans=4, 
+          Respiration_6_trans=5, 
+          Respiration_7_trans=6) 
 
 
 
