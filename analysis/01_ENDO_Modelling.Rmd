@@ -23,6 +23,7 @@ library(compareGroups)
 library(lm.beta)
 
 home = getwd()
+print(home)
 
 ```
 
@@ -37,6 +38,8 @@ home = getwd()
 * Cortisol („CORT")
 * Testosteron („TEST") 
 * Oxytocin (OXT")
+
+**excluded**
 * log(TEST/CORT)
 
 **IV of no interest :** 
@@ -122,14 +125,15 @@ df_ENDO$smoking_yes_no = drop(factor(df_ENDO$smoking_yes_no, levels = c(0,1),
 # table(df_ENDO$smoking_yes_no, useNA = "always")
 # table(df_ENDO$gender, useNA = "always")
 
-df_ENDO$TESTCORTlogBL = log(df_ENDO$TEST_BL_log/df_ENDO$CORT_BL_log)
-df_ENDO$TESTCORTlogBL[is.infinite(df_ENDO$TESTCORTlogBL)] = NA
-
-df_ENDO$TESTCORTlog10 = log(df_ENDO$TEST_10_log/df_ENDO$CORT_10_log)
-df_ENDO$TESTCORTlog10[is.infinite(df_ENDO$TESTCORTlog10)] = NA
-
-df_ENDO$TESTCORTlog55 = log(df_ENDO$TEST_55_log/df_ENDO$CORT_55_log)
-df_ENDO$TESTCORTlog55[is.infinite(df_ENDO$TESTCORTlog55)] = NA
+## excluded from analysis 
+# df_ENDO$TESTCORTlogBL = log(df_ENDO$TEST_BL_log/df_ENDO$CORT_BL_log)
+# df_ENDO$TESTCORTlogBL[is.infinite(df_ENDO$TESTCORTlogBL)] = NA
+# 
+# df_ENDO$TESTCORTlog10 = log(df_ENDO$TEST_10_log/df_ENDO$CORT_10_log)
+# df_ENDO$TESTCORTlog10[is.infinite(df_ENDO$TESTCORTlog10)] = NA
+# 
+# df_ENDO$TESTCORTlog55 = log(df_ENDO$TEST_55_log/df_ENDO$CORT_55_log)
+# df_ENDO$TESTCORTlog55[is.infinite(df_ENDO$TESTCORTlog55)] = NA
 
 
 UV = c("age_meancentered", "BMI_meancentered", "pubcatimp_meancentered",
@@ -150,8 +154,11 @@ AV_stressed = c(stressed_1=0, stressed_2=2,
 
 AV_CORT = c(CORT_BL_log=0, CORT_10_log=25, CORT_25_log=40, CORT_40_log=55, CORT_55_log=70) ,
 AV_TEST = c(TEST_BL_log=0, TEST_10_log=25, TEST_55_log=70),
-AV_TESTCORT = c(TESTCORTlogBL = 0, TESTCORTlog10=25, TESTCORTlog55 = 70),
 AV_OXT =  c(OXT_BL_log=0, OXT_1_log=16, OXT_10_log=25))
+
+# excluded from analysis 
+# AV_TESTCORT = c(TESTCORTlogBL = 0, TESTCORTlog10=25, TESTCORTlog55 = 70),
+
 
 vartoplot = c(UV, Sensvar)
 tmpframe = df_ENDO[,vartoplot[!vartoplot %in% c("centre")]]
@@ -222,21 +229,21 @@ models=list(
   AV_stressed = psych.model,
   AV_CORT = bio.model,
   AV_TEST = bio.model,
-  AV_TESTCORT = bio.model,
+  #AV_TESTCORT = bio.model,
   AV_OXT = bio.model)
 
 models.nogen=list(
   AV_stressed = psych.model.nogen,
   AV_CORT = bio.model.nogen,
   AV_TEST = bio.model.nogen,
-  AV_TESTCORT = bio.model.nogen,
+  #AV_TESTCORT = bio.model.nogen,
   AV_OXT = bio.model.nogen)
 
 models.quant=list(
   AV_stressed = psych.model.quantcd,
   AV_CORT = bio.model.quantcd,
   AV_TEST = bio.model.quantcd,
-  AV_TESTCORT = bio.model.quantcd,
+  #AV_TESTCORT = bio.model.quantcd,
   AV_OXT = bio.model.quantcd)
 
 
@@ -450,52 +457,10 @@ resall[[paste0(depvar, "_coeff_ANXPTSD_life")]] %>% tableplot()
 
 ```
 
-### TEST/CORT ratio
-
-
-full models: `r models[[4]]`
-
-h0 model: DV~1+(1|twuid):
-
-
-overall model p-value:
-`r as.character(signif(resall[["AV_TESTCORT_modsig"]], 3))`
-
-```{r, wrap_res_testcort_2}
-
-depvar = "AV_TESTCORT"
-labeltag = "Testosterone/Cortisol ratio"
-
-ggplot(data = resall[[paste0(depvar, "_longdat")]], 
-       aes(DV, group=Time, col=Time)) + 
-  ylab("density") + xlab(labeltag)+
-  geom_density()
-
-ggplot(data = resall[[paste0(depvar, "_longdat")]], 
-       aes(Time,DV, col=group)) + 
-  ylab(labeltag) + xlab("Time")+
-  geom_smooth(method = 'loess') + geom_point() +   facet_wrap(~gender)
-
-```
-
-#### sensitivity analyses
-
-```{r, sensitivity_testcort}
-
-resall[[paste0(depvar, "_coeff")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_DEPquant")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_males")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_females")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_ADHD_life")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_Eat_life")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_ANXPTSD_life")]] %>% tableplot()
-
-```
-
 
 ### OXT
 
-full models: `r models[[2]]`
+full models: `r models[[4]]`
 
 h0 model: DV~DV~1+(1|twuid):
 
@@ -546,7 +511,7 @@ tableplot_2= function (x){
                        "Psych. stress"=4, 
                        "Testosterone"=4, 
                        "Cortisol"=4, 
-                       "Test/Cort ratio"=4,
+                       #"Test/Cort ratio"=4,
                        "Oxytocin"=4)) %>% kable_classic()
 }
 
@@ -560,7 +525,7 @@ tableplot_3= function (x){
                        "Psych. stress"=4, 
                        "Cortisol"=4, 
                        "Testosterone"=4, 
-                       "Test/Cort ratio"=4,
+                       #"Test/Cort ratio"=4,
                        "Oxytocin"=4)) %>% kable_classic()
 }
 

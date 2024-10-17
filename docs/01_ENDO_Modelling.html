@@ -14,7 +14,7 @@
 
 <title>Endo DEP TSST LMM</title>
 
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -157,11 +157,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -190,8 +194,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -199,16 +203,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -364,7 +361,9 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -373,7 +372,9 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -382,17 +383,28 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-04-29
+<strong>Last updated:</strong> 2024-10-15
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
 </p>
 <p>
-<strong>Knit directory:</strong> <code>S://KJP_Biolabor/Projects/FemNAT-CD/DEP_TSST/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+<strong>Knit directory:</strong>
+<code>S://KJP_Biolabor/Projects/FemNAT-CD/DEP_TSST/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
 </p>
 <p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -401,95 +413,146 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
 <div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220426code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220426)</code> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220426code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20220426)</code> </a>
 </p>
 </div>
-<div id="strongSeedstrongcodesetseed20220426code" class="panel-collapse collapse">
+<div id="strongSeedstrongcodesetseed20220426code"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20220426)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+<p>The command <code>set.seed(20220426)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
 </p>
 </div>
-<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
 </p>
 </div>
 <div id="strongCachestrongnone" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
 </p>
 </div>
 <div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPTSSTtree6c6dd0d2b29e581893ed7792478ebe64ba93d120targetblank6c6dd0da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KJPMolgenLab/DEP_TSST/tree/6c6dd0d2b29e581893ed7792478ebe64ba93d120" target="_blank">6c6dd0d</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPTSSTtreee327b5bf1caccb5adbb8bf1fddd922fd09f387a5targetblanke327b5ba">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/KJPMolgenLab/DEP_TSST/tree/e327b5bf1caccb5adbb8bf1fddd922fd09f387a5" target="_blank">e327b5b</a>
+</a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPTSSTtree6c6dd0d2b29e581893ed7792478ebe64ba93d120targetblank6c6dd0da" class="panel-collapse collapse">
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomKJPMolgenLabDEPTSSTtreee327b5bf1caccb5adbb8bf1fddd922fd09f387a5targetblanke327b5ba"
+class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KJPMolgenLab/DEP_TSST/tree/6c6dd0d2b29e581893ed7792478ebe64ba93d120" target="_blank">6c6dd0d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version
+<a href="https://github.com/KJPMolgenLab/DEP_TSST/tree/e327b5bf1caccb5adbb8bf1fddd922fd09f387a5" target="_blank">e327b5b</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
 </p>
 <p>
-Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
 </p>
 <pre><code>
 Ignored files:
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
 
 Untracked files:
     Untracked:  Info für Andreas.docx
@@ -499,10 +562,13 @@ Untracked files:
 
 Unstaged changes:
     Modified:   _workflowr.yml
+    Modified:   analysis/01_ENDO_Modelling.Rmd
 
 </code></pre>
 <p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
 </p>
 </div>
 </div>
@@ -512,7 +578,8 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 </div>
 <div id="versions" class="tab-pane fade">
 <p>
-There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
 </p>
 <hr>
 </div>
@@ -524,12 +591,12 @@ There are no past versions. Publish this analysis with <code>wflow_publish()</co
 <h2>Definitions</h2>
 <p><strong>DV:</strong></p>
 <ul>
-<li>psychologischer Stress („stressed")</li>
-<li>Cortisol („CORT")</li>
-<li>Testosteron („TEST")</li>
-<li>Oxytocin (OXT")</li>
-<li>log(TEST/CORT)</li>
+<li>psychologischer Stress („stressed”)</li>
+<li>Cortisol („CORT”)</li>
+<li>Testosteron („TEST”)</li>
+<li>Oxytocin (OXT”)</li>
 </ul>
+<p><strong>excluded</strong> * log(TEST/CORT)</p>
 <p><strong>IV of no interest :</strong></p>
 <ul>
 <li>Age scaled (“age_meancentered”)</li>
@@ -539,7 +606,8 @@ There are no past versions. Publish this analysis with <code>wflow_publish()</co
 </ul>
 <p><strong>IV of interest :</strong></p>
 <ul>
-<li>Gruppe (“group”) = 2-Faktor HC vs DEP [Dep ist mit 3, HCs mit 2 kodiert]</li>
+<li>Gruppe (“group”) = 2-Faktor HC vs DEP [Dep ist mit 3, HCs mit 2
+kodiert]</li>
 <li>sex (“gender”)</li>
 <li>Zeitpunkt (“Time”) with 2xpolynomes</li>
 <li>Gruppe x Zeitpunkt(Time each poly)</li>
@@ -607,14 +675,15 @@ df_ENDO$smoking_yes_no = drop(factor(df_ENDO$smoking_yes_no, levels = c(0,1),
 # table(df_ENDO$smoking_yes_no, useNA = &quot;always&quot;)
 # table(df_ENDO$gender, useNA = &quot;always&quot;)
 
-df_ENDO$TESTCORTlogBL = log(df_ENDO$TEST_BL_log/df_ENDO$CORT_BL_log)
-df_ENDO$TESTCORTlogBL[is.infinite(df_ENDO$TESTCORTlogBL)] = NA
-
-df_ENDO$TESTCORTlog10 = log(df_ENDO$TEST_10_log/df_ENDO$CORT_10_log)
-df_ENDO$TESTCORTlog10[is.infinite(df_ENDO$TESTCORTlog10)] = NA
-
-df_ENDO$TESTCORTlog55 = log(df_ENDO$TEST_55_log/df_ENDO$CORT_55_log)
-df_ENDO$TESTCORTlog55[is.infinite(df_ENDO$TESTCORTlog55)] = NA
+## excluded from analysis 
+# df_ENDO$TESTCORTlogBL = log(df_ENDO$TEST_BL_log/df_ENDO$CORT_BL_log)
+# df_ENDO$TESTCORTlogBL[is.infinite(df_ENDO$TESTCORTlogBL)] = NA
+# 
+# df_ENDO$TESTCORTlog10 = log(df_ENDO$TEST_10_log/df_ENDO$CORT_10_log)
+# df_ENDO$TESTCORTlog10[is.infinite(df_ENDO$TESTCORTlog10)] = NA
+# 
+# df_ENDO$TESTCORTlog55 = log(df_ENDO$TEST_55_log/df_ENDO$CORT_55_log)
+# df_ENDO$TESTCORTlog55[is.infinite(df_ENDO$TESTCORTlog55)] = NA
 
 
 UV = c(&quot;age_meancentered&quot;, &quot;BMI_meancentered&quot;, &quot;pubcatimp_meancentered&quot;,
@@ -635,8 +704,11 @@ AV_stressed = c(stressed_1=0, stressed_2=2,
 
 AV_CORT = c(CORT_BL_log=0, CORT_10_log=25, CORT_25_log=40, CORT_40_log=55, CORT_55_log=70) ,
 AV_TEST = c(TEST_BL_log=0, TEST_10_log=25, TEST_55_log=70),
-AV_TESTCORT = c(TESTCORTlogBL = 0, TESTCORTlog10=25, TESTCORTlog55 = 70),
 AV_OXT =  c(OXT_BL_log=0, OXT_1_log=16, OXT_10_log=25))
+
+# excluded from analysis 
+# AV_TESTCORT = c(TESTCORTlogBL = 0, TESTCORTlog10=25, TESTCORTlog55 = 70),
+
 
 vartoplot = c(UV, Sensvar)
 tmpframe = df_ENDO[,vartoplot[!vartoplot %in% c(&quot;centre&quot;)]]
@@ -1027,48 +1099,6 @@ TEST_55_log
 </td>
 <td style="text-align:center;">
 &lt;0.001
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-TESTCORTlogBL
-</td>
-<td style="text-align:center;">
-1.34 (0.57)
-</td>
-<td style="text-align:center;">
-1.35 (0.58)
-</td>
-<td style="text-align:center;">
-0.908
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-TESTCORTlog10
-</td>
-<td style="text-align:center;">
-1.05 (0.75)
-</td>
-<td style="text-align:center;">
-1.24 (0.59)
-</td>
-<td style="text-align:center;">
-0.077
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-TESTCORTlog55
-</td>
-<td style="text-align:center;">
-1.26 (0.53)
-</td>
-<td style="text-align:center;">
-1.42 (0.68)
-</td>
-<td style="text-align:center;">
-0.079
 </td>
 </tr>
 <tr>
@@ -1598,48 +1628,6 @@ TEST_55_log
 </td>
 <td style="text-align:center;">
 0.008
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-TESTCORTlogBL
-</td>
-<td style="text-align:center;">
-1.30 (0.36)
-</td>
-<td style="text-align:center;">
-1.57 (0.75)
-</td>
-<td style="text-align:center;">
-0.067
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-TESTCORTlog10
-</td>
-<td style="text-align:center;">
-1.20 (0.86)
-</td>
-<td style="text-align:center;">
-1.36 (0.64)
-</td>
-<td style="text-align:center;">
-0.445
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-TESTCORTlog55
-</td>
-<td style="text-align:center;">
-1.41 (0.44)
-</td>
-<td style="text-align:center;">
-1.62 (0.71)
-</td>
-<td style="text-align:center;">
-0.147
 </td>
 </tr>
 <tr>
@@ -2174,48 +2162,6 @@ TEST_55_log
 </tr>
 <tr>
 <td style="text-align:left;">
-TESTCORTlogBL
-</td>
-<td style="text-align:center;">
-1.36 (0.65)
-</td>
-<td style="text-align:center;">
-1.22 (0.40)
-</td>
-<td style="text-align:center;">
-0.213
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-TESTCORTlog10
-</td>
-<td style="text-align:center;">
-0.96 (0.68)
-</td>
-<td style="text-align:center;">
-1.17 (0.56)
-</td>
-<td style="text-align:center;">
-0.088
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-TESTCORTlog55
-</td>
-<td style="text-align:center;">
-1.17 (0.57)
-</td>
-<td style="text-align:center;">
-1.31 (0.64)
-</td>
-<td style="text-align:center;">
-0.238
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 OXT_BL_log
 </td>
 <td style="text-align:center;">
@@ -2388,9 +2334,12 @@ ANXPTSD
 </table>
 </div>
 </div>
-<div id="linear-model-with-mixed-effects-and-time-as-polynomial" class="section level1">
+<div id="linear-model-with-mixed-effects-and-time-as-polynomial"
+class="section level1">
 <h1>linear model with mixed effects and time as polynomial</h1>
-<p>We adapted a boxed design by individual over Time with a 2 polynomial decomposion of time no site effect included as all samples where from Frankfurt</p>
+<p>We adapted a boxed design by individual over Time with a 2 polynomial
+decomposion of time no site effect included as all samples where from
+Frankfurt</p>
 <pre class="r"><code>bio.model = &quot;DV~1+age_meancentered+BMI_meancentered+pubcatimp_meancentered+smoking_yes_no+gender+group+poly(Time, 2)+gender*group+poly(Time, 2)*group+gender*poly(Time, 2)*group+(1|twuid)&quot;
 
 psych.model = &quot;DV~1+age_meancentered+pubcatimp_meancentered+gender+group+poly(Time, 2)+gender*group+poly(Time, 2)*group+gender*poly(Time, 2)*group+(1|twuid)&quot;
@@ -2410,21 +2359,21 @@ models=list(
   AV_stressed = psych.model,
   AV_CORT = bio.model,
   AV_TEST = bio.model,
-  AV_TESTCORT = bio.model,
+  #AV_TESTCORT = bio.model,
   AV_OXT = bio.model)
 
 models.nogen=list(
   AV_stressed = psych.model.nogen,
   AV_CORT = bio.model.nogen,
   AV_TEST = bio.model.nogen,
-  AV_TESTCORT = bio.model.nogen,
+  #AV_TESTCORT = bio.model.nogen,
   AV_OXT = bio.model.nogen)
 
 models.quant=list(
   AV_stressed = psych.model.quantcd,
   AV_CORT = bio.model.quantcd,
   AV_TEST = bio.model.quantcd,
-  AV_TESTCORT = bio.model.quantcd,
+  #AV_TESTCORT = bio.model.quantcd,
   AV_OXT = bio.model.quantcd)</code></pre>
 <pre class="r"><code>lm.beta.lmer &lt;- function(mod) {
    b &lt;- fixef(mod)[-1]
@@ -2500,13 +2449,15 @@ for (depvar in names(AV)){
 <pre><code>refitting model(s) with ML (instead of REML)
 refitting model(s) with ML (instead of REML)
 refitting model(s) with ML (instead of REML)
-refitting model(s) with ML (instead of REML)
 refitting model(s) with ML (instead of REML)</code></pre>
 <div id="results" class="section level2">
 <h2>Results</h2>
 <div id="stressed" class="section level3">
 <h3>stressed</h3>
-<p>full models: DV~1+age_meancentered+pubcatimp_meancentered+gender+group+poly(Time, 2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time, 2)</em>group+(1|twuid)</p>
+<p>full models:
+DV~1+age_meancentered+pubcatimp_meancentered+gender+group+poly(Time,
+2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time,
+2)</em>group+(1|twuid)</p>
 <p>h0 model: DV~1+(1|twuid):</p>
 <p>overall model p-value:5.55e-86</p>
 <pre class="r"><code>tableplot = function (x){
@@ -2526,7 +2477,7 @@ ggplot(data = resall[[paste0(depvar, &quot;_longdat&quot;)]],
        aes(Time,DV, col=group)) + 
   ylab(labeltag) + xlab(&quot;Time&quot;)+
   geom_smooth(method = &#39;loess&#39;) + geom_point() +   facet_wrap(~gender)</code></pre>
-<pre><code>`geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>`geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="figure/01_ENDO_Modelling.Rmd/wrap_res_stressed_2-2.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="sensitivity-analyses" class="section level4">
 <h4>sensitivity analyses</h4>
@@ -4496,7 +4447,10 @@ genderfemale:groupDEP:poly(Time, 2)2
 </div>
 <div id="cort" class="section level3">
 <h3>CORT</h3>
-<p>full models: DV~1+age_meancentered+BMI_meancentered+pubcatimp_meancentered+smoking_yes_no+gender+group+poly(Time, 2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time, 2)</em>group+(1|twuid)</p>
+<p>full models:
+DV~1+age_meancentered+BMI_meancentered+pubcatimp_meancentered+smoking_yes_no+gender+group+poly(Time,
+2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time,
+2)</em>group+(1|twuid)</p>
 <p>h0 model:DV~1+(1|twuid):</p>
 <p>overall model p-value:6.03e-20</p>
 <pre class="r"><code>depvar = &quot;AV_CORT&quot;
@@ -4511,7 +4465,7 @@ ggplot(data = resall[[paste0(depvar, &quot;_longdat&quot;)]],
        aes(Time,DV, col=group)) + 
   ylab(labeltag) + xlab(&quot;Time&quot;)+
   geom_smooth(method = &#39;loess&#39;) + geom_point() +   facet_wrap(~gender)</code></pre>
-<pre><code>`geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>`geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="figure/01_ENDO_Modelling.Rmd/wrap_res_CORT_2-2.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="sensitivity-analyses-1" class="section level4">
 <h4>sensitivity analyses</h4>
@@ -6761,7 +6715,10 @@ genderfemale:groupDEP:poly(Time, 2)2
 </div>
 <div id="test" class="section level3">
 <h3>TEST</h3>
-<p>full models: DV~1+age_meancentered+BMI_meancentered+pubcatimp_meancentered+smoking_yes_no+gender+group+poly(Time, 2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time, 2)</em>group+(1|twuid)</p>
+<p>full models:
+DV~1+age_meancentered+BMI_meancentered+pubcatimp_meancentered+smoking_yes_no+gender+group+poly(Time,
+2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time,
+2)</em>group+(1|twuid)</p>
 <p>h0 model: DV~1+(1|twuid):</p>
 <p>overall model p-value: 3.99e-25</p>
 <pre class="r"><code>depvar = &quot;AV_TEST&quot;
@@ -6776,7 +6733,7 @@ ggplot(data = resall[[paste0(depvar, &quot;_longdat&quot;)]],
        aes(Time,DV, col=group)) + 
   ylab(labeltag) + xlab(&quot;Time&quot;)+
   geom_smooth(method = &#39;loess&#39;) + geom_point() +   facet_wrap(~gender)</code></pre>
-<pre><code>`geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>`geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="figure/01_ENDO_Modelling.Rmd/wrap_res_TEST_2-2.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="sensitivity-analyses-2" class="section level4">
 <h4>sensitivity analyses</h4>
@@ -9024,2274 +8981,12 @@ genderfemale:groupDEP:poly(Time, 2)2
 </table>
 </div>
 </div>
-<div id="testcort-ratio" class="section level3">
-<h3>TEST/CORT ratio</h3>
-<p>full models: DV~1+age_meancentered+BMI_meancentered+pubcatimp_meancentered+smoking_yes_no+gender+group+poly(Time, 2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time, 2)</em>group+(1|twuid)</p>
-<p>h0 model: DV~1+(1|twuid):</p>
-<p>overall model p-value: 9.6e-07</p>
-<pre class="r"><code>depvar = &quot;AV_TESTCORT&quot;
-labeltag = &quot;Testosterone/Cortisol ratio&quot;
-
-ggplot(data = resall[[paste0(depvar, &quot;_longdat&quot;)]], 
-       aes(DV, group=Time, col=Time)) + 
-  ylab(&quot;density&quot;) + xlab(labeltag)+
-  geom_density()</code></pre>
-<p><img src="figure/01_ENDO_Modelling.Rmd/wrap_res_testcort_2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>ggplot(data = resall[[paste0(depvar, &quot;_longdat&quot;)]], 
-       aes(Time,DV, col=group)) + 
-  ylab(labeltag) + xlab(&quot;Time&quot;)+
-  geom_smooth(method = &#39;loess&#39;) + geom_point() +   facet_wrap(~gender)</code></pre>
-<pre><code>`geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="figure/01_ENDO_Modelling.Rmd/wrap_res_testcort_2-2.png" width="672" style="display: block; margin: auto;" /></p>
-<div id="sensitivity-analyses-3" class="section level4">
-<h4>sensitivity analyses</h4>
-<pre class="r"><code>resall[[paste0(depvar, &quot;_coeff&quot;)]] %&gt;% tableplot()</code></pre>
-<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-Estimate
-</th>
-<th style="text-align:left;">
-Std. Error
-</th>
-<th style="text-align:left;">
-t value
-</th>
-<th style="text-align:left;">
-stbeta
-</th>
-<th style="text-align:left;">
-pvalue
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-(Intercept)
-</td>
-<td style="text-align:left;">
-0.0115
-</td>
-<td style="text-align:left;">
-0.186
-</td>
-<td style="text-align:left;">
-0.0616
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-0.951
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-age_meancentered
-</td>
-<td style="text-align:left;">
--0.0932
-</td>
-<td style="text-align:left;">
-0.0799
-</td>
-<td style="text-align:left;">
--1.17
-</td>
-<td style="text-align:left;">
--0.0936
-</td>
-<td style="text-align:left;">
-0.243
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-BMI_meancentered
-</td>
-<td style="text-align:left;">
-0.0798
-</td>
-<td style="text-align:left;">
-0.0701
-</td>
-<td style="text-align:left;">
-1.14
-</td>
-<td style="text-align:left;">
-0.0792
-</td>
-<td style="text-align:left;">
-0.255
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-pubcatimp_meancentered
-</td>
-<td style="text-align:left;">
--0.102
-</td>
-<td style="text-align:left;">
-0.0952
-</td>
-<td style="text-align:left;">
--1.08
-</td>
-<td style="text-align:left;">
--0.101
-</td>
-<td style="text-align:left;">
-0.282
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-smoking_yes_nosmk
-</td>
-<td style="text-align:left;">
-0.0159
-</td>
-<td style="text-align:left;">
-0.169
-</td>
-<td style="text-align:left;">
-0.0938
-</td>
-<td style="text-align:left;">
-0.00674
-</td>
-<td style="text-align:left;">
-0.925
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale
-</td>
-<td style="text-align:left;">
--0.126
-</td>
-<td style="text-align:left;">
-0.24
-</td>
-<td style="text-align:left;">
--0.524
-</td>
-<td style="text-align:left;">
--0.0606
-</td>
-<td style="text-align:left;">
-0.601
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP
-</td>
-<td style="text-align:left;">
-0.358
-</td>
-<td style="text-align:left;">
-0.222
-</td>
-<td style="text-align:left;">
-1.61
-</td>
-<td style="text-align:left;">
-0.176
-</td>
-<td style="text-align:left;">
-0.107
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-0.668
-</td>
-<td style="text-align:left;">
-1.73
-</td>
-<td style="text-align:left;">
-0.387
-</td>
-<td style="text-align:left;">
-0.0291
-</td>
-<td style="text-align:left;">
-0.699
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-3.4
-</td>
-<td style="text-align:left;">
-1.71
-</td>
-<td style="text-align:left;">
-1.99
-</td>
-<td style="text-align:left;">
-0.149
-</td>
-<td style="text-align:left;">
-0.0471
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:groupDEP
-</td>
-<td style="text-align:left;">
--0.294
-</td>
-<td style="text-align:left;">
-0.279
-</td>
-<td style="text-align:left;">
--1.05
-</td>
-<td style="text-align:left;">
--0.142
-</td>
-<td style="text-align:left;">
-0.292
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-1.18
-</td>
-<td style="text-align:left;">
-2.23
-</td>
-<td style="text-align:left;">
-0.531
-</td>
-<td style="text-align:left;">
-0.0397
-</td>
-<td style="text-align:left;">
-0.596
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-0.38
-</td>
-<td style="text-align:left;">
-2.21
-</td>
-<td style="text-align:left;">
-0.172
-</td>
-<td style="text-align:left;">
-0.0128
-</td>
-<td style="text-align:left;">
-0.863
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
--1.77
-</td>
-<td style="text-align:left;">
-2.16
-</td>
-<td style="text-align:left;">
--0.818
-</td>
-<td style="text-align:left;">
--0.0612
-</td>
-<td style="text-align:left;">
-0.413
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-2.6
-</td>
-<td style="text-align:left;">
-2.13
-</td>
-<td style="text-align:left;">
-1.22
-</td>
-<td style="text-align:left;">
-0.0908
-</td>
-<td style="text-align:left;">
-0.222
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:groupDEP:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-1.63
-</td>
-<td style="text-align:left;">
-2.79
-</td>
-<td style="text-align:left;">
-0.582
-</td>
-<td style="text-align:left;">
-0.0433
-</td>
-<td style="text-align:left;">
-0.561
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:groupDEP:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
--4.99
-</td>
-<td style="text-align:left;">
-2.76
-</td>
-<td style="text-align:left;">
--1.8
-</td>
-<td style="text-align:left;">
--0.133
-</td>
-<td style="text-align:left;">
-0.0713
-</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>resall[[paste0(depvar, &quot;_coeff_DEPquant&quot;)]] %&gt;% tableplot()</code></pre>
-<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-Estimate
-</th>
-<th style="text-align:left;">
-Std. Error
-</th>
-<th style="text-align:left;">
-t value
-</th>
-<th style="text-align:left;">
-stbeta
-</th>
-<th style="text-align:left;">
-pvalue
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-(Intercept)
-</td>
-<td style="text-align:left;">
-0.255
-</td>
-<td style="text-align:left;">
-0.131
-</td>
-<td style="text-align:left;">
-1.94
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-0.052
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-age_meancentered
-</td>
-<td style="text-align:left;">
--0.0949
-</td>
-<td style="text-align:left;">
-0.0811
-</td>
-<td style="text-align:left;">
--1.17
-</td>
-<td style="text-align:left;">
--0.0946
-</td>
-<td style="text-align:left;">
-0.242
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-BMI_meancentered
-</td>
-<td style="text-align:left;">
-0.0836
-</td>
-<td style="text-align:left;">
-0.0701
-</td>
-<td style="text-align:left;">
-1.19
-</td>
-<td style="text-align:left;">
-0.0828
-</td>
-<td style="text-align:left;">
-0.233
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-pubcatimp_meancentered
-</td>
-<td style="text-align:left;">
--0.107
-</td>
-<td style="text-align:left;">
-0.0969
-</td>
-<td style="text-align:left;">
--1.1
-</td>
-<td style="text-align:left;">
--0.104
-</td>
-<td style="text-align:left;">
-0.269
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-smoking_yes_nosmk
-</td>
-<td style="text-align:left;">
-0.0343
-</td>
-<td style="text-align:left;">
-0.178
-</td>
-<td style="text-align:left;">
-0.193
-</td>
-<td style="text-align:left;">
-0.0146
-</td>
-<td style="text-align:left;">
-0.847
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale
-</td>
-<td style="text-align:left;">
--0.334
-</td>
-<td style="text-align:left;">
-0.173
-</td>
-<td style="text-align:left;">
--1.94
-</td>
-<td style="text-align:left;">
--0.16
-</td>
-<td style="text-align:left;">
-0.0528
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-DIKJ_RW
-</td>
-<td style="text-align:left;">
-0.158
-</td>
-<td style="text-align:left;">
-0.132
-</td>
-<td style="text-align:left;">
-1.19
-</td>
-<td style="text-align:left;">
-0.157
-</td>
-<td style="text-align:left;">
-0.232
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-1.54
-</td>
-<td style="text-align:left;">
-1.13
-</td>
-<td style="text-align:left;">
-1.36
-</td>
-<td style="text-align:left;">
-0.0669
-</td>
-<td style="text-align:left;">
-0.172
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-3.57
-</td>
-<td style="text-align:left;">
-1.12
-</td>
-<td style="text-align:left;">
-3.19
-</td>
-<td style="text-align:left;">
-0.156
-</td>
-<td style="text-align:left;">
-0.00141
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:DIKJ_RW
-</td>
-<td style="text-align:left;">
--0.173
-</td>
-<td style="text-align:left;">
-0.15
-</td>
-<td style="text-align:left;">
--1.15
-</td>
-<td style="text-align:left;">
--0.146
-</td>
-<td style="text-align:left;">
-0.249
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-DIKJ_RW:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-1.83
-</td>
-<td style="text-align:left;">
-1.29
-</td>
-<td style="text-align:left;">
-1.42
-</td>
-<td style="text-align:left;">
-0.0794
-</td>
-<td style="text-align:left;">
-0.157
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-DIKJ_RW:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
--1.33
-</td>
-<td style="text-align:left;">
-1.27
-</td>
-<td style="text-align:left;">
--1.05
-</td>
-<td style="text-align:left;">
--0.0583
-</td>
-<td style="text-align:left;">
-0.295
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
--0.968
-</td>
-<td style="text-align:left;">
-1.41
-</td>
-<td style="text-align:left;">
--0.686
-</td>
-<td style="text-align:left;">
--0.0334
-</td>
-<td style="text-align:left;">
-0.493
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
--0.134
-</td>
-<td style="text-align:left;">
-1.39
-</td>
-<td style="text-align:left;">
--0.096
-</td>
-<td style="text-align:left;">
--0.00465
-</td>
-<td style="text-align:left;">
-0.924
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:DIKJ_RW:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
--0.823
-</td>
-<td style="text-align:left;">
-1.51
-</td>
-<td style="text-align:left;">
--0.543
-</td>
-<td style="text-align:left;">
--0.0303
-</td>
-<td style="text-align:left;">
-0.587
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:DIKJ_RW:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-0.0358
-</td>
-<td style="text-align:left;">
-1.49
-</td>
-<td style="text-align:left;">
-0.0239
-</td>
-<td style="text-align:left;">
-0.00132
-</td>
-<td style="text-align:left;">
-0.981
-</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>resall[[paste0(depvar, &quot;_coeff_males&quot;)]] %&gt;% tableplot()</code></pre>
-<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-Estimate
-</th>
-<th style="text-align:left;">
-Std. Error
-</th>
-<th style="text-align:left;">
-t value
-</th>
-<th style="text-align:left;">
-stbeta
-</th>
-<th style="text-align:left;">
-pvalue
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-(Intercept)
-</td>
-<td style="text-align:left;">
--0.0729
-</td>
-<td style="text-align:left;">
-0.251
-</td>
-<td style="text-align:left;">
--0.291
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-0.771
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-age_meancentered
-</td>
-<td style="text-align:left;">
-0.0808
-</td>
-<td style="text-align:left;">
-0.176
-</td>
-<td style="text-align:left;">
-0.459
-</td>
-<td style="text-align:left;">
-0.07
-</td>
-<td style="text-align:left;">
-0.646
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-BMI_meancentered
-</td>
-<td style="text-align:left;">
--0.0123
-</td>
-<td style="text-align:left;">
-0.128
-</td>
-<td style="text-align:left;">
--0.0964
-</td>
-<td style="text-align:left;">
--0.0117
-</td>
-<td style="text-align:left;">
-0.923
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-pubcatimp_meancentered
-</td>
-<td style="text-align:left;">
--0.258
-</td>
-<td style="text-align:left;">
-0.19
-</td>
-<td style="text-align:left;">
--1.36
-</td>
-<td style="text-align:left;">
--0.208
-</td>
-<td style="text-align:left;">
-0.175
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-smoking_yes_nosmk
-</td>
-<td style="text-align:left;">
--0.391
-</td>
-<td style="text-align:left;">
-0.344
-</td>
-<td style="text-align:left;">
--1.14
-</td>
-<td style="text-align:left;">
--0.141
-</td>
-<td style="text-align:left;">
-0.256
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP
-</td>
-<td style="text-align:left;">
-0.464
-</td>
-<td style="text-align:left;">
-0.269
-</td>
-<td style="text-align:left;">
-1.73
-</td>
-<td style="text-align:left;">
-0.215
-</td>
-<td style="text-align:left;">
-0.0844
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-0.536
-</td>
-<td style="text-align:left;">
-1.73
-</td>
-<td style="text-align:left;">
-0.311
-</td>
-<td style="text-align:left;">
-0.0219
-</td>
-<td style="text-align:left;">
-0.756
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-3.46
-</td>
-<td style="text-align:left;">
-1.71
-</td>
-<td style="text-align:left;">
-2.02
-</td>
-<td style="text-align:left;">
-0.143
-</td>
-<td style="text-align:left;">
-0.0431
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-1.39
-</td>
-<td style="text-align:left;">
-2.23
-</td>
-<td style="text-align:left;">
-0.623
-</td>
-<td style="text-align:left;">
-0.0439
-</td>
-<td style="text-align:left;">
-0.533
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-0.265
-</td>
-<td style="text-align:left;">
-2.21
-</td>
-<td style="text-align:left;">
-0.12
-</td>
-<td style="text-align:left;">
-0.00843
-</td>
-<td style="text-align:left;">
-0.905
-</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>resall[[paste0(depvar, &quot;_coeff_females&quot;)]] %&gt;% tableplot()</code></pre>
-<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-Estimate
-</th>
-<th style="text-align:left;">
-Std. Error
-</th>
-<th style="text-align:left;">
-t value
-</th>
-<th style="text-align:left;">
-stbeta
-</th>
-<th style="text-align:left;">
-pvalue
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-(Intercept)
-</td>
-<td style="text-align:left;">
--0.124
-</td>
-<td style="text-align:left;">
-0.128
-</td>
-<td style="text-align:left;">
--0.968
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-0.333
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-age_meancentered
-</td>
-<td style="text-align:left;">
--0.151
-</td>
-<td style="text-align:left;">
-0.0853
-</td>
-<td style="text-align:left;">
--1.77
-</td>
-<td style="text-align:left;">
--0.169
-</td>
-<td style="text-align:left;">
-0.0767
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-BMI_meancentered
-</td>
-<td style="text-align:left;">
-0.126
-</td>
-<td style="text-align:left;">
-0.0833
-</td>
-<td style="text-align:left;">
-1.51
-</td>
-<td style="text-align:left;">
-0.131
-</td>
-<td style="text-align:left;">
-0.131
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-pubcatimp_meancentered
-</td>
-<td style="text-align:left;">
--0.0543
-</td>
-<td style="text-align:left;">
-0.107
-</td>
-<td style="text-align:left;">
--0.507
-</td>
-<td style="text-align:left;">
--0.0492
-</td>
-<td style="text-align:left;">
-0.612
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-smoking_yes_nosmk
-</td>
-<td style="text-align:left;">
-0.16
-</td>
-<td style="text-align:left;">
-0.189
-</td>
-<td style="text-align:left;">
-0.846
-</td>
-<td style="text-align:left;">
-0.0758
-</td>
-<td style="text-align:left;">
-0.397
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP
-</td>
-<td style="text-align:left;">
--0.0185
-</td>
-<td style="text-align:left;">
-0.171
-</td>
-<td style="text-align:left;">
--0.108
-</td>
-<td style="text-align:left;">
--0.00971
-</td>
-<td style="text-align:left;">
-0.914
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-poly(Time, 2)1
-</td>
-<td style="text-align:left;">
--1.16
-</td>
-<td style="text-align:left;">
-1.29
-</td>
-<td style="text-align:left;">
--0.902
-</td>
-<td style="text-align:left;">
--0.0541
-</td>
-<td style="text-align:left;">
-0.367
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-5.97
-</td>
-<td style="text-align:left;">
-1.27
-</td>
-<td style="text-align:left;">
-4.71
-</td>
-<td style="text-align:left;">
-0.28
-</td>
-<td style="text-align:left;">
-2.48e-06
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-2.87
-</td>
-<td style="text-align:left;">
-1.68
-</td>
-<td style="text-align:left;">
-1.71
-</td>
-<td style="text-align:left;">
-0.103
-</td>
-<td style="text-align:left;">
-0.0864
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
--4.58
-</td>
-<td style="text-align:left;">
-1.66
-</td>
-<td style="text-align:left;">
--2.76
-</td>
-<td style="text-align:left;">
--0.164
-</td>
-<td style="text-align:left;">
-0.0057
-</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>resall[[paste0(depvar, &quot;_coeff_ADHD_life&quot;)]] %&gt;% tableplot()</code></pre>
-<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-Estimate
-</th>
-<th style="text-align:left;">
-Std. Error
-</th>
-<th style="text-align:left;">
-t value
-</th>
-<th style="text-align:left;">
-stbeta
-</th>
-<th style="text-align:left;">
-pvalue
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-(Intercept)
-</td>
-<td style="text-align:left;">
-0.0144
-</td>
-<td style="text-align:left;">
-0.186
-</td>
-<td style="text-align:left;">
-0.0772
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-0.938
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-ADHD_lifeADHD
-</td>
-<td style="text-align:left;">
-0.273
-</td>
-<td style="text-align:left;">
-0.301
-</td>
-<td style="text-align:left;">
-0.906
-</td>
-<td style="text-align:left;">
-0.0615
-</td>
-<td style="text-align:left;">
-0.365
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-age_meancentered
-</td>
-<td style="text-align:left;">
--0.0863
-</td>
-<td style="text-align:left;">
-0.0803
-</td>
-<td style="text-align:left;">
--1.08
-</td>
-<td style="text-align:left;">
--0.0866
-</td>
-<td style="text-align:left;">
-0.282
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-BMI_meancentered
-</td>
-<td style="text-align:left;">
-0.078
-</td>
-<td style="text-align:left;">
-0.0702
-</td>
-<td style="text-align:left;">
-1.11
-</td>
-<td style="text-align:left;">
-0.0774
-</td>
-<td style="text-align:left;">
-0.267
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-pubcatimp_meancentered
-</td>
-<td style="text-align:left;">
--0.101
-</td>
-<td style="text-align:left;">
-0.0952
-</td>
-<td style="text-align:left;">
--1.06
-</td>
-<td style="text-align:left;">
--0.0994
-</td>
-<td style="text-align:left;">
-0.288
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-smoking_yes_nosmk
-</td>
-<td style="text-align:left;">
-0.00228
-</td>
-<td style="text-align:left;">
-0.17
-</td>
-<td style="text-align:left;">
-0.0134
-</td>
-<td style="text-align:left;">
-0.00097
-</td>
-<td style="text-align:left;">
-0.989
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale
-</td>
-<td style="text-align:left;">
--0.128
-</td>
-<td style="text-align:left;">
-0.24
-</td>
-<td style="text-align:left;">
--0.534
-</td>
-<td style="text-align:left;">
--0.0619
-</td>
-<td style="text-align:left;">
-0.593
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP
-</td>
-<td style="text-align:left;">
-0.328
-</td>
-<td style="text-align:left;">
-0.225
-</td>
-<td style="text-align:left;">
-1.46
-</td>
-<td style="text-align:left;">
-0.162
-</td>
-<td style="text-align:left;">
-0.144
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-0.668
-</td>
-<td style="text-align:left;">
-1.73
-</td>
-<td style="text-align:left;">
-0.387
-</td>
-<td style="text-align:left;">
-0.0291
-</td>
-<td style="text-align:left;">
-0.699
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-3.4
-</td>
-<td style="text-align:left;">
-1.71
-</td>
-<td style="text-align:left;">
-1.98
-</td>
-<td style="text-align:left;">
-0.149
-</td>
-<td style="text-align:left;">
-0.0472
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:groupDEP
-</td>
-<td style="text-align:left;">
--0.281
-</td>
-<td style="text-align:left;">
-0.28
-</td>
-<td style="text-align:left;">
--1.01
-</td>
-<td style="text-align:left;">
--0.136
-</td>
-<td style="text-align:left;">
-0.314
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-1.18
-</td>
-<td style="text-align:left;">
-2.23
-</td>
-<td style="text-align:left;">
-0.529
-</td>
-<td style="text-align:left;">
-0.0395
-</td>
-<td style="text-align:left;">
-0.597
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-0.382
-</td>
-<td style="text-align:left;">
-2.21
-</td>
-<td style="text-align:left;">
-0.173
-</td>
-<td style="text-align:left;">
-0.0128
-</td>
-<td style="text-align:left;">
-0.863
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
--1.77
-</td>
-<td style="text-align:left;">
-2.16
-</td>
-<td style="text-align:left;">
--0.818
-</td>
-<td style="text-align:left;">
--0.0611
-</td>
-<td style="text-align:left;">
-0.413
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-2.6
-</td>
-<td style="text-align:left;">
-2.13
-</td>
-<td style="text-align:left;">
-1.22
-</td>
-<td style="text-align:left;">
-0.0908
-</td>
-<td style="text-align:left;">
-0.222
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:groupDEP:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-1.63
-</td>
-<td style="text-align:left;">
-2.8
-</td>
-<td style="text-align:left;">
-0.583
-</td>
-<td style="text-align:left;">
-0.0433
-</td>
-<td style="text-align:left;">
-0.56
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:groupDEP:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
--4.99
-</td>
-<td style="text-align:left;">
-2.77
-</td>
-<td style="text-align:left;">
--1.8
-</td>
-<td style="text-align:left;">
--0.133
-</td>
-<td style="text-align:left;">
-0.0713
-</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>resall[[paste0(depvar, &quot;_coeff_Eat_life&quot;)]] %&gt;% tableplot()</code></pre>
-<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-Estimate
-</th>
-<th style="text-align:left;">
-Std. Error
-</th>
-<th style="text-align:left;">
-t value
-</th>
-<th style="text-align:left;">
-stbeta
-</th>
-<th style="text-align:left;">
-pvalue
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-(Intercept)
-</td>
-<td style="text-align:left;">
-0.0147
-</td>
-<td style="text-align:left;">
-0.187
-</td>
-<td style="text-align:left;">
-0.0788
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-0.937
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Eat_lifeEatDis
-</td>
-<td style="text-align:left;">
-0.0817
-</td>
-<td style="text-align:left;">
-0.261
-</td>
-<td style="text-align:left;">
-0.313
-</td>
-<td style="text-align:left;">
-0.0223
-</td>
-<td style="text-align:left;">
-0.754
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-age_meancentered
-</td>
-<td style="text-align:left;">
--0.0972
-</td>
-<td style="text-align:left;">
-0.0812
-</td>
-<td style="text-align:left;">
--1.2
-</td>
-<td style="text-align:left;">
--0.0975
-</td>
-<td style="text-align:left;">
-0.231
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-BMI_meancentered
-</td>
-<td style="text-align:left;">
-0.0812
-</td>
-<td style="text-align:left;">
-0.0705
-</td>
-<td style="text-align:left;">
-1.15
-</td>
-<td style="text-align:left;">
-0.0807
-</td>
-<td style="text-align:left;">
-0.249
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-pubcatimp_meancentered
-</td>
-<td style="text-align:left;">
--0.0995
-</td>
-<td style="text-align:left;">
-0.0959
-</td>
-<td style="text-align:left;">
--1.04
-</td>
-<td style="text-align:left;">
--0.0977
-</td>
-<td style="text-align:left;">
-0.299
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-smoking_yes_nosmk
-</td>
-<td style="text-align:left;">
-0.00978
-</td>
-<td style="text-align:left;">
-0.171
-</td>
-<td style="text-align:left;">
-0.0573
-</td>
-<td style="text-align:left;">
-0.00415
-</td>
-<td style="text-align:left;">
-0.954
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale
-</td>
-<td style="text-align:left;">
--0.129
-</td>
-<td style="text-align:left;">
-0.241
-</td>
-<td style="text-align:left;">
--0.536
-</td>
-<td style="text-align:left;">
--0.0624
-</td>
-<td style="text-align:left;">
-0.592
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP
-</td>
-<td style="text-align:left;">
-0.355
-</td>
-<td style="text-align:left;">
-0.223
-</td>
-<td style="text-align:left;">
-1.59
-</td>
-<td style="text-align:left;">
-0.175
-</td>
-<td style="text-align:left;">
-0.111
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-0.665
-</td>
-<td style="text-align:left;">
-1.73
-</td>
-<td style="text-align:left;">
-0.385
-</td>
-<td style="text-align:left;">
-0.0289
-</td>
-<td style="text-align:left;">
-0.7
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-3.4
-</td>
-<td style="text-align:left;">
-1.71
-</td>
-<td style="text-align:left;">
-1.99
-</td>
-<td style="text-align:left;">
-0.149
-</td>
-<td style="text-align:left;">
-0.0468
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:groupDEP
-</td>
-<td style="text-align:left;">
--0.307
-</td>
-<td style="text-align:left;">
-0.283
-</td>
-<td style="text-align:left;">
--1.08
-</td>
-<td style="text-align:left;">
--0.149
-</td>
-<td style="text-align:left;">
-0.278
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-1.19
-</td>
-<td style="text-align:left;">
-2.23
-</td>
-<td style="text-align:left;">
-0.533
-</td>
-<td style="text-align:left;">
-0.0398
-</td>
-<td style="text-align:left;">
-0.594
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-0.376
-</td>
-<td style="text-align:left;">
-2.21
-</td>
-<td style="text-align:left;">
-0.17
-</td>
-<td style="text-align:left;">
-0.0127
-</td>
-<td style="text-align:left;">
-0.865
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
--1.76
-</td>
-<td style="text-align:left;">
-2.16
-</td>
-<td style="text-align:left;">
--0.816
-</td>
-<td style="text-align:left;">
--0.061
-</td>
-<td style="text-align:left;">
-0.414
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-2.6
-</td>
-<td style="text-align:left;">
-2.13
-</td>
-<td style="text-align:left;">
-1.22
-</td>
-<td style="text-align:left;">
-0.0907
-</td>
-<td style="text-align:left;">
-0.223
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:groupDEP:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-1.62
-</td>
-<td style="text-align:left;">
-2.79
-</td>
-<td style="text-align:left;">
-0.581
-</td>
-<td style="text-align:left;">
-0.0432
-</td>
-<td style="text-align:left;">
-0.561
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:groupDEP:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
--4.98
-</td>
-<td style="text-align:left;">
-2.76
-</td>
-<td style="text-align:left;">
--1.8
-</td>
-<td style="text-align:left;">
--0.133
-</td>
-<td style="text-align:left;">
-0.0715
-</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>resall[[paste0(depvar, &quot;_coeff_ANXPTSD_life&quot;)]] %&gt;% tableplot()</code></pre>
-<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-Estimate
-</th>
-<th style="text-align:left;">
-Std. Error
-</th>
-<th style="text-align:left;">
-t value
-</th>
-<th style="text-align:left;">
-stbeta
-</th>
-<th style="text-align:left;">
-pvalue
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-(Intercept)
-</td>
-<td style="text-align:left;">
-0.00239
-</td>
-<td style="text-align:left;">
-0.185
-</td>
-<td style="text-align:left;">
-0.0129
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-0.99
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-ANXPTSD_lifeANXPTSD
-</td>
-<td style="text-align:left;">
-0.257
-</td>
-<td style="text-align:left;">
-0.159
-</td>
-<td style="text-align:left;">
-1.62
-</td>
-<td style="text-align:left;">
-0.121
-</td>
-<td style="text-align:left;">
-0.106
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-age_meancentered
-</td>
-<td style="text-align:left;">
--0.0919
-</td>
-<td style="text-align:left;">
-0.0796
-</td>
-<td style="text-align:left;">
--1.15
-</td>
-<td style="text-align:left;">
--0.0922
-</td>
-<td style="text-align:left;">
-0.248
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-BMI_meancentered
-</td>
-<td style="text-align:left;">
-0.0746
-</td>
-<td style="text-align:left;">
-0.0699
-</td>
-<td style="text-align:left;">
-1.07
-</td>
-<td style="text-align:left;">
-0.0741
-</td>
-<td style="text-align:left;">
-0.286
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-pubcatimp_meancentered
-</td>
-<td style="text-align:left;">
--0.103
-</td>
-<td style="text-align:left;">
-0.0948
-</td>
-<td style="text-align:left;">
--1.09
-</td>
-<td style="text-align:left;">
--0.101
-</td>
-<td style="text-align:left;">
-0.278
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-smoking_yes_nosmk
-</td>
-<td style="text-align:left;">
-0.0212
-</td>
-<td style="text-align:left;">
-0.168
-</td>
-<td style="text-align:left;">
-0.126
-</td>
-<td style="text-align:left;">
-0.009
-</td>
-<td style="text-align:left;">
-0.9
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale
-</td>
-<td style="text-align:left;">
--0.136
-</td>
-<td style="text-align:left;">
-0.239
-</td>
-<td style="text-align:left;">
--0.567
-</td>
-<td style="text-align:left;">
--0.0654
-</td>
-<td style="text-align:left;">
-0.571
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP
-</td>
-<td style="text-align:left;">
-0.232
-</td>
-<td style="text-align:left;">
-0.234
-</td>
-<td style="text-align:left;">
-0.99
-</td>
-<td style="text-align:left;">
-0.114
-</td>
-<td style="text-align:left;">
-0.322
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-0.679
-</td>
-<td style="text-align:left;">
-1.73
-</td>
-<td style="text-align:left;">
-0.394
-</td>
-<td style="text-align:left;">
-0.0296
-</td>
-<td style="text-align:left;">
-0.694
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-3.44
-</td>
-<td style="text-align:left;">
-1.71
-</td>
-<td style="text-align:left;">
-2.01
-</td>
-<td style="text-align:left;">
-0.151
-</td>
-<td style="text-align:left;">
-0.0445
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:groupDEP
-</td>
-<td style="text-align:left;">
--0.286
-</td>
-<td style="text-align:left;">
-0.278
-</td>
-<td style="text-align:left;">
--1.03
-</td>
-<td style="text-align:left;">
--0.138
-</td>
-<td style="text-align:left;">
-0.304
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-1.17
-</td>
-<td style="text-align:left;">
-2.23
-</td>
-<td style="text-align:left;">
-0.523
-</td>
-<td style="text-align:left;">
-0.0391
-</td>
-<td style="text-align:left;">
-0.601
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-groupDEP:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-0.334
-</td>
-<td style="text-align:left;">
-2.21
-</td>
-<td style="text-align:left;">
-0.151
-</td>
-<td style="text-align:left;">
-0.0112
-</td>
-<td style="text-align:left;">
-0.88
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
--1.79
-</td>
-<td style="text-align:left;">
-2.16
-</td>
-<td style="text-align:left;">
--0.831
-</td>
-<td style="text-align:left;">
--0.0621
-</td>
-<td style="text-align:left;">
-0.406
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
-2.57
-</td>
-<td style="text-align:left;">
-2.13
-</td>
-<td style="text-align:left;">
-1.21
-</td>
-<td style="text-align:left;">
-0.0897
-</td>
-<td style="text-align:left;">
-0.228
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:groupDEP:poly(Time, 2)1
-</td>
-<td style="text-align:left;">
-1.65
-</td>
-<td style="text-align:left;">
-2.79
-</td>
-<td style="text-align:left;">
-0.592
-</td>
-<td style="text-align:left;">
-0.044
-</td>
-<td style="text-align:left;">
-0.554
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-genderfemale:groupDEP:poly(Time, 2)2
-</td>
-<td style="text-align:left;">
--4.95
-</td>
-<td style="text-align:left;">
-2.76
-</td>
-<td style="text-align:left;">
--1.79
-</td>
-<td style="text-align:left;">
--0.132
-</td>
-<td style="text-align:left;">
-0.0733
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <div id="oxt" class="section level3">
 <h3>OXT</h3>
-<p>full models: DV~1+age_meancentered+BMI_meancentered+pubcatimp_meancentered+smoking_yes_no+gender+group+poly(Time, 2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time, 2)</em>group+(1|twuid)</p>
+<p>full models:
+DV~1+age_meancentered+BMI_meancentered+pubcatimp_meancentered+smoking_yes_no+gender+group+poly(Time,
+2)+gender<em>group+poly(Time, 2)</em>group+gender<em>poly(Time,
+2)</em>group+(1|twuid)</p>
 <p>h0 model: DV<sub>DV</sub>1+(1|twuid):</p>
 <p>overall model p-value: 7.08e-05</p>
 <pre class="r"><code>depvar = &quot;AV_OXT&quot;
@@ -11306,9 +9001,9 @@ ggplot(data = resall[[paste0(depvar, &quot;_longdat&quot;)]],
        aes(Time,DV, col=group)) + 
   ylab(labeltag) + xlab(&quot;Time&quot;)+
   geom_smooth(method = &#39;loess&#39;) + geom_point() +   facet_wrap(~gender)</code></pre>
-<pre><code>`geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>`geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="figure/01_ENDO_Modelling.Rmd/wrap_res_OXT_2-2.png" width="672" style="display: block; margin: auto;" /></p>
-<div id="sensitivity-analyses-4" class="section level4">
+<div id="sensitivity-analyses-3" class="section level4">
 <h4>sensitivity analyses</h4>
 <pre class="r"><code>resall[[paste0(depvar, &quot;_coeff&quot;)]] %&gt;% tableplot()</code></pre>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
@@ -13560,7 +11255,7 @@ tableplot_2= function (x){
                        &quot;Psych. stress&quot;=4, 
                        &quot;Testosterone&quot;=4, 
                        &quot;Cortisol&quot;=4, 
-                       &quot;Test/Cort ratio&quot;=4,
+                       #&quot;Test/Cort ratio&quot;=4,
                        &quot;Oxytocin&quot;=4)) %&gt;% kable_classic()
 }
 
@@ -13574,7 +11269,7 @@ tableplot_3= function (x){
                        &quot;Psych. stress&quot;=4, 
                        &quot;Cortisol&quot;=4, 
                        &quot;Testosterone&quot;=4, 
-                       &quot;Test/Cort ratio&quot;=4,
+                       #&quot;Test/Cort ratio&quot;=4,
                        &quot;Oxytocin&quot;=4)) %&gt;% kable_classic()
 }</code></pre>
 </div>
@@ -13617,11 +11312,6 @@ Testosterone
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
 <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-Test/Cort ratio
-</div>
-</th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
 Oxytocin
 </div>
 </th>
@@ -13630,18 +11320,6 @@ Oxytocin
 <th style="text-align:left;">
 <ul>
 <li></th>
-<th style="text-align:left;">
-beta
-</th>
-<th style="text-align:left;">
-se
-</th>
-<th style="text-align:left;">
-st.beta
-</th>
-<th style="text-align:left;">
-P
-</th>
 <th style="text-align:left;">
 beta
 </th>
@@ -13734,18 +11412,6 @@ NA
 0.03
 </td>
 <td style="text-align:left;">
-0.01
-</td>
-<td style="text-align:left;">
-0.19
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-0.95
-</td>
-<td style="text-align:left;">
 -0.39
 </td>
 <td style="text-align:left;">
@@ -13797,18 +11463,6 @@ age_meancentered
 </td>
 <td style="text-align:left;">
 0.12
-</td>
-<td style="text-align:left;">
--0.09
-</td>
-<td style="text-align:left;">
-0.08
-</td>
-<td style="text-align:left;">
--0.09
-</td>
-<td style="text-align:left;">
-0.24
 </td>
 <td style="text-align:left;">
 -0.02
@@ -13864,18 +11518,6 @@ pubcatimp_meancentered
 0.24
 </td>
 <td style="text-align:left;">
--0.1
-</td>
-<td style="text-align:left;">
-0.1
-</td>
-<td style="text-align:left;">
--0.1
-</td>
-<td style="text-align:left;">
-0.28
-</td>
-<td style="text-align:left;">
 -0.01
 </td>
 <td style="text-align:left;">
@@ -13927,18 +11569,6 @@ genderfemale
 </td>
 <td style="text-align:left;">
 &lt;0.01
-</td>
-<td style="text-align:left;">
--0.13
-</td>
-<td style="text-align:left;">
-0.24
-</td>
-<td style="text-align:left;">
--0.06
-</td>
-<td style="text-align:left;">
-0.6
 </td>
 <td style="text-align:left;">
 0.65
@@ -13994,18 +11624,6 @@ groupDEP
 &lt;0.01
 </td>
 <td style="text-align:left;">
-0.36
-</td>
-<td style="text-align:left;">
-0.22
-</td>
-<td style="text-align:left;">
-0.18
-</td>
-<td style="text-align:left;">
-0.11
-</td>
-<td style="text-align:left;">
 0.25
 </td>
 <td style="text-align:left;">
@@ -14057,18 +11675,6 @@ poly(Time, 2)1
 </td>
 <td style="text-align:left;">
 0.01
-</td>
-<td style="text-align:left;">
-0.67
-</td>
-<td style="text-align:left;">
-1.73
-</td>
-<td style="text-align:left;">
-0.03
-</td>
-<td style="text-align:left;">
-0.7
 </td>
 <td style="text-align:left;">
 5.53
@@ -14124,18 +11730,6 @@ poly(Time, 2)2
 0.01
 </td>
 <td style="text-align:left;">
-3.4
-</td>
-<td style="text-align:left;">
-1.71
-</td>
-<td style="text-align:left;">
-0.15
-</td>
-<td style="text-align:left;">
-0.05
-</td>
-<td style="text-align:left;">
 -9.49
 </td>
 <td style="text-align:left;">
@@ -14187,18 +11781,6 @@ genderfemale:groupDEP
 </td>
 <td style="text-align:left;">
 0.34
-</td>
-<td style="text-align:left;">
--0.29
-</td>
-<td style="text-align:left;">
-0.28
-</td>
-<td style="text-align:left;">
--0.14
-</td>
-<td style="text-align:left;">
-0.29
 </td>
 <td style="text-align:left;">
 -0.5
@@ -14254,18 +11836,6 @@ groupDEP:poly(Time, 2)1
 0.18
 </td>
 <td style="text-align:left;">
-1.18
-</td>
-<td style="text-align:left;">
-2.23
-</td>
-<td style="text-align:left;">
-0.04
-</td>
-<td style="text-align:left;">
-0.6
-</td>
-<td style="text-align:left;">
 -3.79
 </td>
 <td style="text-align:left;">
@@ -14317,18 +11887,6 @@ groupDEP:poly(Time, 2)2
 </td>
 <td style="text-align:left;">
 0.52
-</td>
-<td style="text-align:left;">
-0.38
-</td>
-<td style="text-align:left;">
-2.21
-</td>
-<td style="text-align:left;">
-0.01
-</td>
-<td style="text-align:left;">
-0.86
 </td>
 <td style="text-align:left;">
 8.37
@@ -14384,18 +11942,6 @@ genderfemale:poly(Time, 2)1
 0.17
 </td>
 <td style="text-align:left;">
--1.77
-</td>
-<td style="text-align:left;">
-2.16
-</td>
-<td style="text-align:left;">
--0.06
-</td>
-<td style="text-align:left;">
-0.41
-</td>
-<td style="text-align:left;">
 -3.63
 </td>
 <td style="text-align:left;">
@@ -14447,18 +11993,6 @@ genderfemale:poly(Time, 2)2
 </td>
 <td style="text-align:left;">
 0.13
-</td>
-<td style="text-align:left;">
-2.6
-</td>
-<td style="text-align:left;">
-2.13
-</td>
-<td style="text-align:left;">
-0.09
-</td>
-<td style="text-align:left;">
-0.22
 </td>
 <td style="text-align:left;">
 5.62
@@ -14514,18 +12048,6 @@ genderfemale:groupDEP:poly(Time, 2)1
 0.16
 </td>
 <td style="text-align:left;">
-1.63
-</td>
-<td style="text-align:left;">
-2.79
-</td>
-<td style="text-align:left;">
-0.04
-</td>
-<td style="text-align:left;">
-0.56
-</td>
-<td style="text-align:left;">
 4.57
 </td>
 <td style="text-align:left;">
@@ -14579,18 +12101,6 @@ genderfemale:groupDEP:poly(Time, 2)2
 0.19
 </td>
 <td style="text-align:left;">
--4.99
-</td>
-<td style="text-align:left;">
-2.76
-</td>
-<td style="text-align:left;">
--0.13
-</td>
-<td style="text-align:left;">
-0.07
-</td>
-<td style="text-align:left;">
 -5.22
 </td>
 <td style="text-align:left;">
@@ -14639,18 +12149,6 @@ NA
 </td>
 <td style="text-align:left;">
 0.07
-</td>
-<td style="text-align:left;">
-0.26
-</td>
-<td style="text-align:left;">
-0.08
-</td>
-<td style="text-align:left;">
-0.07
-</td>
-<td style="text-align:left;">
-0.08
 </td>
 <td style="text-align:left;">
 0.26
@@ -14709,18 +12207,6 @@ NA
 0.5
 </td>
 <td style="text-align:left;">
-0.02
-</td>
-<td style="text-align:left;">
-0.17
-</td>
-<td style="text-align:left;">
-0.01
-</td>
-<td style="text-align:left;">
-0.93
-</td>
-<td style="text-align:left;">
 0.11
 </td>
 <td style="text-align:left;">
@@ -14767,11 +12253,6 @@ Testosterone
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
 <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-Test/Cort ratio
-</div>
-</th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
 Oxytocin
 </div>
 </th>
@@ -14780,18 +12261,6 @@ Oxytocin
 <th style="text-align:left;">
 <ul>
 <li></th>
-<th style="text-align:left;">
-beta
-</th>
-<th style="text-align:left;">
-se
-</th>
-<th style="text-align:left;">
-st.beta
-</th>
-<th style="text-align:left;">
-P
-</th>
 <th style="text-align:left;">
 beta
 </th>
@@ -14884,18 +12353,6 @@ pubcatimp_meancentered
 0.24
 </td>
 <td style="text-align:left;">
--0.1
-</td>
-<td style="text-align:left;">
-0.1
-</td>
-<td style="text-align:left;">
--0.1
-</td>
-<td style="text-align:left;">
-0.28
-</td>
-<td style="text-align:left;">
 -0.01
 </td>
 <td style="text-align:left;">
@@ -14947,18 +12404,6 @@ genderfemale
 </td>
 <td style="text-align:left;">
 &lt;0.01
-</td>
-<td style="text-align:left;">
--0.13
-</td>
-<td style="text-align:left;">
-0.24
-</td>
-<td style="text-align:left;">
--0.06
-</td>
-<td style="text-align:left;">
-0.6
 </td>
 <td style="text-align:left;">
 0.65
@@ -15014,18 +12459,6 @@ groupDEP
 &lt;0.01
 </td>
 <td style="text-align:left;">
-0.36
-</td>
-<td style="text-align:left;">
-0.22
-</td>
-<td style="text-align:left;">
-0.18
-</td>
-<td style="text-align:left;">
-0.11
-</td>
-<td style="text-align:left;">
 0.25
 </td>
 <td style="text-align:left;">
@@ -15077,18 +12510,6 @@ poly(Time, 2)1
 </td>
 <td style="text-align:left;">
 0.01
-</td>
-<td style="text-align:left;">
-0.67
-</td>
-<td style="text-align:left;">
-1.73
-</td>
-<td style="text-align:left;">
-0.03
-</td>
-<td style="text-align:left;">
-0.7
 </td>
 <td style="text-align:left;">
 5.53
@@ -15144,18 +12565,6 @@ poly(Time, 2)2
 0.01
 </td>
 <td style="text-align:left;">
-3.4
-</td>
-<td style="text-align:left;">
-1.71
-</td>
-<td style="text-align:left;">
-0.15
-</td>
-<td style="text-align:left;">
-0.05
-</td>
-<td style="text-align:left;">
 -9.49
 </td>
 <td style="text-align:left;">
@@ -15207,18 +12616,6 @@ genderfemale:groupDEP
 </td>
 <td style="text-align:left;">
 0.34
-</td>
-<td style="text-align:left;">
--0.29
-</td>
-<td style="text-align:left;">
-0.28
-</td>
-<td style="text-align:left;">
--0.14
-</td>
-<td style="text-align:left;">
-0.29
 </td>
 <td style="text-align:left;">
 -0.5
@@ -15274,18 +12671,6 @@ groupDEP:poly(Time, 2)1
 0.18
 </td>
 <td style="text-align:left;">
-1.18
-</td>
-<td style="text-align:left;">
-2.23
-</td>
-<td style="text-align:left;">
-0.04
-</td>
-<td style="text-align:left;">
-0.6
-</td>
-<td style="text-align:left;">
 -3.79
 </td>
 <td style="text-align:left;">
@@ -15337,18 +12722,6 @@ groupDEP:poly(Time, 2)2
 </td>
 <td style="text-align:left;">
 0.52
-</td>
-<td style="text-align:left;">
-0.38
-</td>
-<td style="text-align:left;">
-2.21
-</td>
-<td style="text-align:left;">
-0.01
-</td>
-<td style="text-align:left;">
-0.86
 </td>
 <td style="text-align:left;">
 8.37
@@ -15404,18 +12777,6 @@ genderfemale:poly(Time, 2)1
 0.17
 </td>
 <td style="text-align:left;">
--1.77
-</td>
-<td style="text-align:left;">
-2.16
-</td>
-<td style="text-align:left;">
--0.06
-</td>
-<td style="text-align:left;">
-0.41
-</td>
-<td style="text-align:left;">
 -3.63
 </td>
 <td style="text-align:left;">
@@ -15467,18 +12828,6 @@ genderfemale:poly(Time, 2)2
 </td>
 <td style="text-align:left;">
 0.13
-</td>
-<td style="text-align:left;">
-2.6
-</td>
-<td style="text-align:left;">
-2.13
-</td>
-<td style="text-align:left;">
-0.09
-</td>
-<td style="text-align:left;">
-0.22
 </td>
 <td style="text-align:left;">
 5.62
@@ -15534,18 +12883,6 @@ genderfemale:groupDEP:poly(Time, 2)1
 0.16
 </td>
 <td style="text-align:left;">
-1.63
-</td>
-<td style="text-align:left;">
-2.79
-</td>
-<td style="text-align:left;">
-0.04
-</td>
-<td style="text-align:left;">
-0.56
-</td>
-<td style="text-align:left;">
 4.57
 </td>
 <td style="text-align:left;">
@@ -15599,18 +12936,6 @@ genderfemale:groupDEP:poly(Time, 2)2
 0.19
 </td>
 <td style="text-align:left;">
--4.99
-</td>
-<td style="text-align:left;">
-2.76
-</td>
-<td style="text-align:left;">
--0.13
-</td>
-<td style="text-align:left;">
-0.07
-</td>
-<td style="text-align:left;">
 -5.22
 </td>
 <td style="text-align:left;">
@@ -15662,11 +12987,6 @@ Testosterone
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
 <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-Test/Cort ratio
-</div>
-</th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
 Oxytocin
 </div>
 </th>
@@ -15675,18 +12995,6 @@ Oxytocin
 <th style="text-align:left;">
 <ul>
 <li></th>
-<th style="text-align:left;">
-beta
-</th>
-<th style="text-align:left;">
-se
-</th>
-<th style="text-align:left;">
-st.beta
-</th>
-<th style="text-align:left;">
-P
-</th>
 <th style="text-align:left;">
 beta
 </th>
@@ -15779,18 +13087,6 @@ NA
 &lt;0.01
 </td>
 <td style="text-align:left;">
--0.12
-</td>
-<td style="text-align:left;">
-0.13
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-0.33
-</td>
-<td style="text-align:left;">
 0.24
 </td>
 <td style="text-align:left;">
@@ -15842,18 +13138,6 @@ age_meancentered
 </td>
 <td style="text-align:left;">
 0.66
-</td>
-<td style="text-align:left;">
--0.15
-</td>
-<td style="text-align:left;">
-0.09
-</td>
-<td style="text-align:left;">
--0.17
-</td>
-<td style="text-align:left;">
-0.08
 </td>
 <td style="text-align:left;">
 -0.05
@@ -15909,18 +13193,6 @@ pubcatimp_meancentered
 0.84
 </td>
 <td style="text-align:left;">
--0.05
-</td>
-<td style="text-align:left;">
-0.11
-</td>
-<td style="text-align:left;">
--0.05
-</td>
-<td style="text-align:left;">
-0.61
-</td>
-<td style="text-align:left;">
 0.08
 </td>
 <td style="text-align:left;">
@@ -15972,18 +13244,6 @@ groupDEP
 </td>
 <td style="text-align:left;">
 0.01
-</td>
-<td style="text-align:left;">
--0.02
-</td>
-<td style="text-align:left;">
-0.17
-</td>
-<td style="text-align:left;">
--0.01
-</td>
-<td style="text-align:left;">
-0.91
 </td>
 <td style="text-align:left;">
 -0.24
@@ -16039,18 +13299,6 @@ poly(Time, 2)1
 0.36
 </td>
 <td style="text-align:left;">
--1.16
-</td>
-<td style="text-align:left;">
-1.29
-</td>
-<td style="text-align:left;">
--0.05
-</td>
-<td style="text-align:left;">
-0.37
-</td>
-<td style="text-align:left;">
 1.9
 </td>
 <td style="text-align:left;">
@@ -16099,18 +13347,6 @@ poly(Time, 2)2
 </td>
 <td style="text-align:left;">
 -0.2
-</td>
-<td style="text-align:left;">
-&lt;0.01
-</td>
-<td style="text-align:left;">
-5.97
-</td>
-<td style="text-align:left;">
-1.27
-</td>
-<td style="text-align:left;">
-0.28
 </td>
 <td style="text-align:left;">
 &lt;0.01
@@ -16169,18 +13405,6 @@ groupDEP:poly(Time, 2)1
 0.59
 </td>
 <td style="text-align:left;">
-2.87
-</td>
-<td style="text-align:left;">
-1.68
-</td>
-<td style="text-align:left;">
-0.1
-</td>
-<td style="text-align:left;">
-0.09
-</td>
-<td style="text-align:left;">
 0.78
 </td>
 <td style="text-align:left;">
@@ -16229,18 +13453,6 @@ groupDEP:poly(Time, 2)2
 </td>
 <td style="text-align:left;">
 0.1
-</td>
-<td style="text-align:left;">
-0.01
-</td>
-<td style="text-align:left;">
--4.58
-</td>
-<td style="text-align:left;">
-1.66
-</td>
-<td style="text-align:left;">
--0.16
 </td>
 <td style="text-align:left;">
 0.01
@@ -16299,18 +13511,6 @@ NA
 0.36
 </td>
 <td style="text-align:left;">
-0.13
-</td>
-<td style="text-align:left;">
-0.08
-</td>
-<td style="text-align:left;">
-0.13
-</td>
-<td style="text-align:left;">
-0.13
-</td>
-<td style="text-align:left;">
 0.06
 </td>
 <td style="text-align:left;">
@@ -16364,18 +13564,6 @@ NA
 0.84
 </td>
 <td style="text-align:left;">
-0.16
-</td>
-<td style="text-align:left;">
-0.19
-</td>
-<td style="text-align:left;">
-0.08
-</td>
-<td style="text-align:left;">
-0.4
-</td>
-<td style="text-align:left;">
 -0.03
 </td>
 <td style="text-align:left;">
@@ -16427,11 +13615,6 @@ Testosterone
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
 <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-Test/Cort ratio
-</div>
-</th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
 Oxytocin
 </div>
 </th>
@@ -16440,18 +13623,6 @@ Oxytocin
 <th style="text-align:left;">
 <ul>
 <li></th>
-<th style="text-align:left;">
-beta
-</th>
-<th style="text-align:left;">
-se
-</th>
-<th style="text-align:left;">
-st.beta
-</th>
-<th style="text-align:left;">
-P
-</th>
 <th style="text-align:left;">
 beta
 </th>
@@ -16544,18 +13715,6 @@ NA
 &lt;0.01
 </td>
 <td style="text-align:left;">
--0.07
-</td>
-<td style="text-align:left;">
-0.25
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-0.77
-</td>
-<td style="text-align:left;">
 -0.57
 </td>
 <td style="text-align:left;">
@@ -16607,18 +13766,6 @@ age_meancentered
 </td>
 <td style="text-align:left;">
 0.04
-</td>
-<td style="text-align:left;">
-0.08
-</td>
-<td style="text-align:left;">
-0.18
-</td>
-<td style="text-align:left;">
-0.07
-</td>
-<td style="text-align:left;">
-0.65
 </td>
 <td style="text-align:left;">
 0.09
@@ -16674,18 +13821,6 @@ pubcatimp_meancentered
 0.05
 </td>
 <td style="text-align:left;">
--0.26
-</td>
-<td style="text-align:left;">
-0.19
-</td>
-<td style="text-align:left;">
--0.21
-</td>
-<td style="text-align:left;">
-0.18
-</td>
-<td style="text-align:left;">
 -0.19
 </td>
 <td style="text-align:left;">
@@ -16737,18 +13872,6 @@ groupDEP
 </td>
 <td style="text-align:left;">
 0.04
-</td>
-<td style="text-align:left;">
-0.46
-</td>
-<td style="text-align:left;">
-0.27
-</td>
-<td style="text-align:left;">
-0.21
-</td>
-<td style="text-align:left;">
-0.08
 </td>
 <td style="text-align:left;">
 0.28
@@ -16804,18 +13927,6 @@ poly(Time, 2)1
 0.01
 </td>
 <td style="text-align:left;">
-0.54
-</td>
-<td style="text-align:left;">
-1.73
-</td>
-<td style="text-align:left;">
-0.02
-</td>
-<td style="text-align:left;">
-0.76
-</td>
-<td style="text-align:left;">
 5.53
 </td>
 <td style="text-align:left;">
@@ -16867,18 +13978,6 @@ poly(Time, 2)2
 </td>
 <td style="text-align:left;">
 &lt;0.01
-</td>
-<td style="text-align:left;">
-3.46
-</td>
-<td style="text-align:left;">
-1.71
-</td>
-<td style="text-align:left;">
-0.14
-</td>
-<td style="text-align:left;">
-0.04
 </td>
 <td style="text-align:left;">
 -9.49
@@ -16934,18 +14033,6 @@ groupDEP:poly(Time, 2)1
 0.13
 </td>
 <td style="text-align:left;">
-1.39
-</td>
-<td style="text-align:left;">
-2.23
-</td>
-<td style="text-align:left;">
-0.04
-</td>
-<td style="text-align:left;">
-0.53
-</td>
-<td style="text-align:left;">
 -3.79
 </td>
 <td style="text-align:left;">
@@ -16997,18 +14084,6 @@ groupDEP:poly(Time, 2)2
 </td>
 <td style="text-align:left;">
 0.47
-</td>
-<td style="text-align:left;">
-0.27
-</td>
-<td style="text-align:left;">
-2.21
-</td>
-<td style="text-align:left;">
-0.01
-</td>
-<td style="text-align:left;">
-0.9
 </td>
 <td style="text-align:left;">
 8.37
@@ -17064,18 +14139,6 @@ NA
 0.21
 </td>
 <td style="text-align:left;">
--0.01
-</td>
-<td style="text-align:left;">
-0.13
-</td>
-<td style="text-align:left;">
--0.01
-</td>
-<td style="text-align:left;">
-0.92
-</td>
-<td style="text-align:left;">
 0.03
 </td>
 <td style="text-align:left;">
@@ -17129,18 +14192,6 @@ NA
 0.37
 </td>
 <td style="text-align:left;">
--0.39
-</td>
-<td style="text-align:left;">
-0.34
-</td>
-<td style="text-align:left;">
--0.14
-</td>
-<td style="text-align:left;">
-0.26
-</td>
-<td style="text-align:left;">
 0.26
 </td>
 <td style="text-align:left;">
@@ -17192,11 +14243,6 @@ Testosterone
 </th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
 <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-Test/Cort ratio
-</div>
-</th>
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
 Oxytocin
 </div>
 </th>
@@ -17205,18 +14251,6 @@ Oxytocin
 <th style="text-align:left;">
 <ul>
 <li></th>
-<th style="text-align:left;">
-beta
-</th>
-<th style="text-align:left;">
-se
-</th>
-<th style="text-align:left;">
-st.beta
-</th>
-<th style="text-align:left;">
-P
-</th>
 <th style="text-align:left;">
 beta
 </th>
@@ -17309,18 +14343,6 @@ NA
 &lt;0.01
 </td>
 <td style="text-align:left;">
-0.25
-</td>
-<td style="text-align:left;">
-0.13
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-0.05
-</td>
-<td style="text-align:left;">
 -0.22
 </td>
 <td style="text-align:left;">
@@ -17372,18 +14394,6 @@ age_meancentered
 </td>
 <td style="text-align:left;">
 0.1
-</td>
-<td style="text-align:left;">
--0.09
-</td>
-<td style="text-align:left;">
-0.08
-</td>
-<td style="text-align:left;">
--0.09
-</td>
-<td style="text-align:left;">
-0.24
 </td>
 <td style="text-align:left;">
 -0.02
@@ -17439,18 +14449,6 @@ pubcatimp_meancentered
 0.38
 </td>
 <td style="text-align:left;">
--0.11
-</td>
-<td style="text-align:left;">
-0.1
-</td>
-<td style="text-align:left;">
--0.1
-</td>
-<td style="text-align:left;">
-0.27
-</td>
-<td style="text-align:left;">
 -0.01
 </td>
 <td style="text-align:left;">
@@ -17502,18 +14500,6 @@ genderfemale
 </td>
 <td style="text-align:left;">
 &lt;0.01
-</td>
-<td style="text-align:left;">
--0.33
-</td>
-<td style="text-align:left;">
-0.17
-</td>
-<td style="text-align:left;">
--0.16
-</td>
-<td style="text-align:left;">
-0.05
 </td>
 <td style="text-align:left;">
 0.32
@@ -17569,18 +14555,6 @@ DIKJ_RW
 &lt;0.01
 </td>
 <td style="text-align:left;">
-0.16
-</td>
-<td style="text-align:left;">
-0.13
-</td>
-<td style="text-align:left;">
-0.16
-</td>
-<td style="text-align:left;">
-0.23
-</td>
-<td style="text-align:left;">
 0.15
 </td>
 <td style="text-align:left;">
@@ -17634,18 +14608,6 @@ poly(Time, 2)1
 0.02
 </td>
 <td style="text-align:left;">
-1.54
-</td>
-<td style="text-align:left;">
-1.13
-</td>
-<td style="text-align:left;">
-0.07
-</td>
-<td style="text-align:left;">
-0.17
-</td>
-<td style="text-align:left;">
 3.17
 </td>
 <td style="text-align:left;">
@@ -17694,18 +14656,6 @@ poly(Time, 2)2
 </td>
 <td style="text-align:left;">
 -0.07
-</td>
-<td style="text-align:left;">
-&lt;0.01
-</td>
-<td style="text-align:left;">
-3.57
-</td>
-<td style="text-align:left;">
-1.12
-</td>
-<td style="text-align:left;">
-0.16
 </td>
 <td style="text-align:left;">
 &lt;0.01
@@ -17764,18 +14714,6 @@ genderfemale:DIKJ_RW
 0.13
 </td>
 <td style="text-align:left;">
--0.17
-</td>
-<td style="text-align:left;">
-0.15
-</td>
-<td style="text-align:left;">
--0.15
-</td>
-<td style="text-align:left;">
-0.25
-</td>
-<td style="text-align:left;">
 -0.24
 </td>
 <td style="text-align:left;">
@@ -17827,18 +14765,6 @@ DIKJ_RW:poly(Time, 2)1
 </td>
 <td style="text-align:left;">
 0.48
-</td>
-<td style="text-align:left;">
-1.83
-</td>
-<td style="text-align:left;">
-1.29
-</td>
-<td style="text-align:left;">
-0.08
-</td>
-<td style="text-align:left;">
-0.16
 </td>
 <td style="text-align:left;">
 -1.89
@@ -17894,18 +14820,6 @@ DIKJ_RW:poly(Time, 2)2
 0.18
 </td>
 <td style="text-align:left;">
--1.33
-</td>
-<td style="text-align:left;">
-1.27
-</td>
-<td style="text-align:left;">
--0.06
-</td>
-<td style="text-align:left;">
-0.3
-</td>
-<td style="text-align:left;">
 1.42
 </td>
 <td style="text-align:left;">
@@ -17957,18 +14871,6 @@ genderfemale:poly(Time, 2)1
 </td>
 <td style="text-align:left;">
 0.59
-</td>
-<td style="text-align:left;">
--0.97
-</td>
-<td style="text-align:left;">
-1.41
-</td>
-<td style="text-align:left;">
--0.03
-</td>
-<td style="text-align:left;">
-0.49
 </td>
 <td style="text-align:left;">
 -0.95
@@ -18024,18 +14926,6 @@ genderfemale:poly(Time, 2)2
 0.26
 </td>
 <td style="text-align:left;">
--0.13
-</td>
-<td style="text-align:left;">
-1.39
-</td>
-<td style="text-align:left;">
-&lt;0.01
-</td>
-<td style="text-align:left;">
-0.92
-</td>
-<td style="text-align:left;">
 1.16
 </td>
 <td style="text-align:left;">
@@ -18087,18 +14977,6 @@ genderfemale:DIKJ_RW:poly(Time, 2)1
 </td>
 <td style="text-align:left;">
 0.37
-</td>
-<td style="text-align:left;">
--0.82
-</td>
-<td style="text-align:left;">
-1.51
-</td>
-<td style="text-align:left;">
--0.03
-</td>
-<td style="text-align:left;">
-0.59
 </td>
 <td style="text-align:left;">
 2.83
@@ -18154,18 +15032,6 @@ genderfemale:DIKJ_RW:poly(Time, 2)2
 0.69
 </td>
 <td style="text-align:left;">
-0.04
-</td>
-<td style="text-align:left;">
-1.49
-</td>
-<td style="text-align:left;">
-&lt;0.01
-</td>
-<td style="text-align:left;">
-0.98
-</td>
-<td style="text-align:left;">
 1.16
 </td>
 <td style="text-align:left;">
@@ -18217,18 +15083,6 @@ NA
 </td>
 <td style="text-align:left;">
 0.2
-</td>
-<td style="text-align:left;">
-0.08
-</td>
-<td style="text-align:left;">
-0.07
-</td>
-<td style="text-align:left;">
-0.08
-</td>
-<td style="text-align:left;">
-0.23
 </td>
 <td style="text-align:left;">
 0.04
@@ -18284,18 +15138,6 @@ NA
 0.78
 </td>
 <td style="text-align:left;">
-0.03
-</td>
-<td style="text-align:left;">
-0.18
-</td>
-<td style="text-align:left;">
-0.01
-</td>
-<td style="text-align:left;">
-0.85
-</td>
-<td style="text-align:left;">
 0.1
 </td>
 <td style="text-align:left;">
@@ -18314,74 +15156,77 @@ NA
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
-<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.1.2 (2021-11-01)
+<pre><code>R version 4.2.0 (2022-04-22 ucrt)
 Platform: x86_64-w64-mingw32/x64 (64-bit)
-Running under: Windows 10 x64 (build 18363)
+Running under: Windows 10 x64 (build 19045)
 
 Matrix products: default
 
 locale:
-[1] LC_COLLATE=German_Germany.1252  LC_CTYPE=German_Germany.1252   
-[3] LC_MONETARY=German_Germany.1252 LC_NUMERIC=C                   
-[5] LC_TIME=German_Germany.1252    
+[1] LC_COLLATE=German_Germany.utf8  LC_CTYPE=German_Germany.utf8   
+[3] LC_MONETARY=German_Germany.utf8 LC_NUMERIC=C                   
+[5] LC_TIME=German_Germany.utf8    
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] lm.beta_1.5-1       compareGroups_4.5.1 caret_6.0-91       
- [4] lattice_0.20-45     kableExtra_1.3.4    lme4_1.1-28        
- [7] Matrix_1.4-0        data.table_1.14.2   forcats_0.5.1      
-[10] stringr_1.4.0       dplyr_1.0.8         purrr_0.3.4        
-[13] readr_2.1.2         tidyr_1.2.0         tibble_3.1.6       
-[16] ggplot2_3.3.5       tidyverse_1.3.1     haven_2.4.3        
+ [1] lm.beta_1.6-2       compareGroups_4.5.1 caret_6.0-93       
+ [4] lattice_0.20-45     kableExtra_1.3.4    lme4_1.1-30        
+ [7] Matrix_1.5-1        data.table_1.14.6   forcats_1.0.0      
+[10] stringr_1.5.0       dplyr_1.1.0         purrr_1.0.1        
+[13] readr_2.1.3         tidyr_1.3.0         tibble_3.1.8       
+[16] ggplot2_3.4.0       tidyverse_1.3.2     haven_2.5.1        
 [19] workflowr_1.7.0    
 
 loaded via a namespace (and not attached):
-  [1] minqa_1.2.4          colorspace_2.0-3     ellipsis_0.3.2      
-  [4] class_7.3-20         rprojroot_2.0.3      flextable_0.7.0     
-  [7] base64enc_0.1-3      fs_1.5.2             mice_3.14.0         
- [10] rstudioapi_0.13      farver_2.1.0         listenv_0.8.0       
- [13] prodlim_2019.11.13   fansi_1.0.2          lubridate_1.8.0     
- [16] xml2_1.3.3           codetools_0.2-18     splines_4.1.2       
- [19] knitr_1.38           jsonlite_1.8.0       nloptr_2.0.0        
- [22] pROC_1.18.0          broom_0.7.12         dbplyr_2.1.1        
- [25] compiler_4.1.2       httr_1.4.2           backports_1.4.1     
- [28] assertthat_0.2.1     fastmap_1.1.0        cli_3.2.0           
- [31] later_1.3.0          htmltools_0.5.2      tools_4.1.2         
- [34] gtable_0.3.0         glue_1.6.2           reshape2_1.4.4      
- [37] Rcpp_1.0.8           cellranger_1.1.0     jquerylib_0.1.4     
- [40] vctrs_0.3.8          writexl_1.4.0        svglite_2.1.0       
- [43] nlme_3.1-157         iterators_1.0.14     timeDate_3043.102   
- [46] xfun_0.30            gower_1.0.0          globals_0.14.0      
- [49] ps_1.6.0             rvest_1.0.2          lifecycle_1.0.1     
- [52] future_1.24.0        getPass_0.2-2        MASS_7.3-56         
- [55] scales_1.1.1         ipred_0.9-12         hms_1.1.1           
- [58] promises_1.2.0.1     parallel_4.1.2       HardyWeinberg_1.7.4 
- [61] yaml_2.3.5           gdtools_0.2.4        sass_0.4.0          
- [64] rpart_4.1.16         stringi_1.7.6        highr_0.9           
- [67] corrplot_0.92        foreach_1.5.2        zip_2.2.0           
- [70] hardhat_0.2.0        boot_1.3-28          truncnorm_1.0-8     
- [73] lava_1.6.10          chron_2.3-56         rlang_1.0.2         
- [76] pkgconfig_2.0.3      systemfonts_1.0.4    Rsolnp_1.16         
- [79] evaluate_0.15        labeling_0.4.2       recipes_0.2.0       
- [82] processx_3.5.3       tidyselect_1.1.2     parallelly_1.30.0   
- [85] plyr_1.8.7           magrittr_2.0.2       R6_2.5.1            
- [88] generics_0.1.2       DBI_1.1.2            mgcv_1.8-40         
- [91] pillar_1.7.0         whisker_0.4          withr_2.5.0         
- [94] survival_3.3-1       nnet_7.3-17          future.apply_1.8.1  
- [97] modelr_0.1.8         crayon_1.5.1         uuid_1.0-3          
-[100] utf8_1.2.2           officer_0.4.2        tzdb_0.2.0          
-[103] rmarkdown_2.13       grid_4.1.2           readxl_1.3.1        
-[106] callr_3.7.0          git2r_0.30.1         ModelMetrics_1.2.2.2
-[109] reprex_2.0.1         digest_0.6.29        webshot_0.5.2       
-[112] httpuv_1.6.5         stats4_4.1.2         munsell_0.5.0       
-[115] viridisLite_0.4.0    bslib_0.3.1         </code></pre>
+  [1] readxl_1.4.1         uuid_1.1-0           backports_1.4.1     
+  [4] corrplot_0.92        systemfonts_1.0.4    plyr_1.8.8          
+  [7] splines_4.2.0        listenv_0.8.0        digest_0.6.31       
+ [10] foreach_1.5.2        htmltools_0.5.4      fansi_1.0.4         
+ [13] magrittr_2.0.3       Rsolnp_1.16          googlesheets4_1.0.1 
+ [16] tzdb_0.3.0           recipes_1.0.1        globals_0.16.1      
+ [19] modelr_0.1.10        gower_1.0.0          officer_0.4.4       
+ [22] svglite_2.1.1        hardhat_1.2.0        timechange_0.2.0    
+ [25] colorspace_2.1-0     rvest_1.0.3          xfun_0.36           
+ [28] callr_3.7.3          crayon_1.5.2         jsonlite_1.8.4      
+ [31] survival_3.4-0       iterators_1.0.14     glue_1.6.2          
+ [34] gtable_0.3.1         gargle_1.3.0         ipred_0.9-13        
+ [37] webshot_0.5.3        future.apply_1.9.1   scales_1.2.1        
+ [40] DBI_1.1.3            Rcpp_1.0.10          viridisLite_0.4.1   
+ [43] stats4_4.2.0         lava_1.6.10          prodlim_2019.11.13  
+ [46] truncnorm_1.0-8      httr_1.4.4           ellipsis_0.3.2      
+ [49] mice_3.14.0          pkgconfig_2.0.3      farver_2.1.1        
+ [52] nnet_7.3-17          sass_0.4.5           dbplyr_2.3.0        
+ [55] utf8_1.2.2           tidyselect_1.2.0     labeling_0.4.2      
+ [58] rlang_1.0.6          reshape2_1.4.4       later_1.3.0         
+ [61] munsell_0.5.0        cellranger_1.1.0     tools_4.2.0         
+ [64] cachem_1.0.6         cli_3.4.1            generics_0.1.3      
+ [67] broom_1.0.3          evaluate_0.20        fastmap_1.1.0       
+ [70] yaml_2.3.7           ModelMetrics_1.2.2.2 processx_3.7.0      
+ [73] knitr_1.42           fs_1.6.0             zip_2.2.2           
+ [76] future_1.28.0        nlme_3.1-159         whisker_0.4.1       
+ [79] xml2_1.3.3           compiler_4.2.0       rstudioapi_0.14     
+ [82] reprex_2.0.2         bslib_0.4.2          stringi_1.7.12      
+ [85] HardyWeinberg_1.7.5  highr_0.10           ps_1.7.1            
+ [88] gdtools_0.2.4        nloptr_2.0.3         vctrs_0.5.2         
+ [91] pillar_1.8.1         lifecycle_1.0.3      jquerylib_0.1.4     
+ [94] flextable_0.8.1      httpuv_1.6.8         R6_2.5.1            
+ [97] promises_1.2.0.1     parallelly_1.32.1    writexl_1.4.0       
+[100] codetools_0.2-18     boot_1.3-28          MASS_7.3-58.1       
+[103] assertthat_0.2.1     chron_2.3-57         rprojroot_2.0.3     
+[106] withr_2.5.0          mgcv_1.8-40          parallel_4.2.0      
+[109] hms_1.1.2            grid_4.2.0           rpart_4.1.16        
+[112] timeDate_4021.104    class_7.3-20         minqa_1.2.5         
+[115] rmarkdown_2.20       googledrive_2.0.0    git2r_0.30.1        
+[118] getPass_0.2-2        pROC_1.18.0          lubridate_1.9.1     
+[121] base64enc_0.1-3     </code></pre>
 </div>
 </div>
 </div>
