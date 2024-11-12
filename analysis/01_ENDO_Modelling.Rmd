@@ -22,7 +22,7 @@ library(ggplot2)
 library(compareGroups)
 library(lm.beta)
 
-home = getwd()
+home = "S:/KJP_Biolabor/Projects/FemNAT-CD/DEP_TSST/"
 print(home)
 
 ```
@@ -67,14 +67,13 @@ print(home)
 
 **sensitivity check 1**
 
-* quantitative DEP "DIKJ_RW" [instead of group]
 * gender 
 
 
 **sensitivity check 2**
 
 * ADHD lifetime diagnosis "ADHD_life"
-* Essstörung "Eat_life"
+* Eating disorder "Eat_life"
 * kombinierte ANX/PTSD "ANXPTSD_life"
 
 
@@ -114,6 +113,20 @@ df_ENDO$Eat_life = drop(factor(df_ENDO$Eat_life, levels = c(0,1),
 df_ENDO$ANXPTSD_life = drop(factor(df_ENDO$ANXPTSD_life, levels = c(0,1), 
                                labels=c("no_ANXPTSD", "ANXPTSD")))%>% relevel(., ref="no_ANXPTSD")
 
+df_ENDO$TSSTSSRI = drop(factor(df_ENDO$TSSTSSRI, levels = c(0,1), 
+                               labels=c("no_SSRI", "SSRI")))%>% relevel(., ref="no_SSRI")
+
+df_ENDO$Anxiety_lifetime = drop(factor(df_ENDO$Anxiety_lifetime, levels = c(0,1), 
+                               labels=c("no_ANX_life", "ANX_life")))%>% relevel(., ref="no_ANX_life")
+
+df_ENDO$PTSD_lifetime = drop(factor(df_ENDO$PTSD_lifetime, levels = c(0,1), 
+                               labels=c("no_PTSD_life", "PTSD_life")))%>% relevel(., ref="no_PTSD_life")
+
+
+df_ENDO$TSSTmedother = drop(factor(df_ENDO$TSSTmedother, levels = c(0,1), 
+                               labels=c("no_medother", "medother")))%>% relevel(., ref="no_medother")
+
+
 df_ENDO$any_med_ccept = drop(factor(df_ENDO$any_med_ccept, levels = c(0,1), 
                                labels=c("no_med", "med")))%>% relevel(., ref="no_med")
 df_ENDO$smoking_yes_no = drop(factor(df_ENDO$smoking_yes_no, levels = c(0,1), 
@@ -137,14 +150,15 @@ df_ENDO$smoking_yes_no = drop(factor(df_ENDO$smoking_yes_no, levels = c(0,1),
 
 
 UV = c("age_meancentered", "BMI_meancentered", "pubcatimp_meancentered",
-       #"any_med_ccept", 
        "smoking_yes_no", "gender", "group")
 
 
 Sensvar = c("DIKJ_RW", 
            "ADHD_life",
            "Eat_life",
-           "ANXPTSD_life")
+           "Anxiety_lifetime", 
+           "TSSTmedother","TSSTSSRI",
+           "PTSD_lifetime")
 
 AV = list(
 AV_stressed = c(stressed_1=0, stressed_2=2,
@@ -181,7 +195,7 @@ res = compareGroups(group~., data = df_ENDO[,vars])
 #summary(res)
 export_table <- createTable(res)
 export2md(export_table)
-
+export2word(export_table,file = "S:/KJP_Biolabor/Projects/FemNAT-CD/DEP_TSST/output/Allstats.docx")
 ```
 
 ## male only cohort descriptives
@@ -190,7 +204,7 @@ res = compareGroups(group~., data = df_ENDO[,c(UV, unlist(lapply(AV, names)), Se
                     subset = gender=="male")
 export_table <- createTable(res)
 export2md(export_table)
-
+export2word(export_table,file = "S:/KJP_Biolabor/Projects/FemNAT-CD/DEP_TSST/output/Malestats.docx")
 ```
 
 ## female only cohort descriptives
@@ -200,6 +214,7 @@ res = compareGroups(group~.,
                     subset = gender=="female")
 export_table <- createTable(res)
 export2md(export_table)
+export2word(export_table,file = "S:/KJP_Biolabor/Projects/FemNAT-CD/DEP_TSST/output/Femalestats.docx")
 ```
 
 
@@ -211,18 +226,17 @@ no site effect included as all samples where from Frankfurt
 ```{r modeldef_poly}
 
 bio.model = "DV~1+age_meancentered+BMI_meancentered+pubcatimp_meancentered+smoking_yes_no+gender+group+poly(Time, 2)+gender*group+poly(Time, 2)*group+gender*poly(Time, 2)*group+(1|twuid)"
+bio.model.two = "DV~1+age_meancentered+BMI_meancentered+pubcatimp_meancentered+smoking_yes_no+gender+group+poly(Time, 2)+poly(Time, 2)*group+(1|twuid)"
+
 
 psych.model = "DV~1+age_meancentered+pubcatimp_meancentered+gender+group+poly(Time, 2)+gender*group+poly(Time, 2)*group+gender*poly(Time, 2)*group+(1|twuid)"
+psych.model.two = "DV~1+age_meancentered+pubcatimp_meancentered+gender+group+poly(Time, 2)+poly(Time, 2)*group+(1|twuid)"
 
 
 bio.model.nogen = "DV~1+age_meancentered+BMI_meancentered+pubcatimp_meancentered+smoking_yes_no+group+poly(Time, 2)+poly(Time, 2)*group+(1|twuid)"
 
 psych.model.nogen = "DV~1+age_meancentered+pubcatimp_meancentered+group+poly(Time, 2)+poly(Time, 2)*group+(1|twuid)"
 
-
-bio.model.quantcd = "DV~1+age_meancentered+BMI_meancentered+pubcatimp_meancentered+smoking_yes_no+gender+DIKJ_RW+poly(Time, 2)+gender*DIKJ_RW+poly(Time, 2)*DIKJ_RW+gender*poly(Time, 2)*DIKJ_RW+(1|twuid)"
-
-psych.model.quantcd = "DV~1+age_meancentered+pubcatimp_meancentered+gender+DIKJ_RW+poly(Time, 2)+gender*DIKJ_RW+poly(Time, 2)*DIKJ_RW+gender*poly(Time, 2)*DIKJ_RW+(1|twuid)"
 
 
 models=list(
@@ -232,21 +246,20 @@ models=list(
   #AV_TESTCORT = bio.model,
   AV_OXT = bio.model)
 
+models.two=list(
+  AV_stressed = psych.model.two,
+  AV_CORT = bio.model.two,
+  AV_TEST = bio.model.two,
+  #AV_TESTCORT = bio.model,
+  AV_OXT = bio.model.two)
+
+
 models.nogen=list(
   AV_stressed = psych.model.nogen,
   AV_CORT = bio.model.nogen,
   AV_TEST = bio.model.nogen,
   #AV_TESTCORT = bio.model.nogen,
   AV_OXT = bio.model.nogen)
-
-models.quant=list(
-  AV_stressed = psych.model.quantcd,
-  AV_CORT = bio.model.quantcd,
-  AV_TEST = bio.model.quantcd,
-  #AV_TESTCORT = bio.model.quantcd,
-  AV_OXT = bio.model.quantcd)
-
-
 
 ```
 
@@ -271,35 +284,42 @@ for (depvar in names(AV)){
   long2$Time = AV[[depvar]][long2$value]
   long2$value =as.factor(long2$value) %>% 
     relevel(., ref=grep("BL|stressed_1",  unique(long2$value),value = T))
+  
+  # models threeway
   model.lme = lme4::lmer(models[[depvar]], data=long2)
   model.lme0 = lme4::lmer(DV~1+(1|twuid), data=long2)
   anovah0 = anova(model.lme0, model.lme)
   model_p_val = anovah0$`Pr(>Chisq)`[2]
   Res = summary(model.lme)
-  resall[[depvar]] = model.lme
-  resall[[paste0(depvar,"_longdat")]] = long2
+  resall[[paste0(depvar,"_threeway")]] = model.lme
+  resall[[paste0(depvar,"_longdat_threeway")]] = long2
   res.coeff = as.data.frame(Res$coefficients)
   res.coeff$stbeta = c(NA,lm.beta.lmer(model.lme))
   res.coeff$pvalue = pt(abs(res.coeff$"t value"), 1000000, lower.tail = F) * 2
-  resall[[paste0(depvar,"_coeff")]]=res.coeff
-  resall[[paste0(depvar,"_modsig")]]=model_p_val
+  resall[[paste0(depvar,"_coeff_threeway")]]=res.coeff
+  resall[[paste0(depvar,"_modsig_threeway")]]=model_p_val
   
-  ## DEP quant
-  model.lme = lme4::lmer(models.quant[[depvar]], data=long2)
+  # models twoway
+  model.lme = lme4::lmer(models.two[[depvar]], data=long2)
+  model.lme0 = lme4::lmer(DV~1+(1|twuid), data=long2)
+  anovah0 = anova(model.lme0, model.lme)
+  model_p_val = anovah0$`Pr(>Chisq)`[2]
   Res = summary(model.lme)
   resall[[depvar]] = model.lme
-  resall[[paste0(depvar,"_longdat")]] = long2
+  resall[[paste0(depvar,"_twoway")]] = model.lme
+  resall[[paste0(depvar,"_longdat_twoway")]] = long2
   res.coeff = as.data.frame(Res$coefficients)
   res.coeff$stbeta = c(NA,lm.beta.lmer(model.lme))
   res.coeff$pvalue = pt(abs(res.coeff$"t value"), 1000000, lower.tail = F) * 2
-  resall[[paste0(depvar,"_coeff_DEPquant")]]=res.coeff
+  resall[[paste0(depvar,"_coeff_twoway")]]=res.coeff
+  resall[[paste0(depvar,"_modsig_twoway")]]=model_p_val
   
   ## nogenmod 
   ### males
   model.lme = lme4::lmer(models.nogen[[depvar]], data=long2, subset = long2$gender=="male")
   Res = summary(model.lme)
   resall[[depvar]] = model.lme
-  resall[[paste0(depvar,"_longdat")]] = long2
+  resall[[paste0(depvar,"_longdat_males")]] = long2
   res.coeff = as.data.frame(Res$coefficients)
   res.coeff$stbeta = c(NA,lm.beta.lmer(model.lme))
   res.coeff$pvalue = pt(abs(res.coeff$"t value"), 1000000, lower.tail = F) * 2
@@ -309,7 +329,7 @@ for (depvar in names(AV)){
   model.lme = lme4::lmer(models.nogen[[depvar]], data=long2, subset = long2$gender=="female")
   Res = summary(model.lme)
   resall[[depvar]] = model.lme
-  resall[[paste0(depvar,"_longdat")]] = long2
+  resall[[paste0(depvar,"_longdat_females")]] = long2
   res.coeff = as.data.frame(Res$coefficients)
   res.coeff$stbeta = c(NA,lm.beta.lmer(model.lme))
   res.coeff$pvalue = pt(abs(res.coeff$"t value"), 1000000, lower.tail = F) * 2
@@ -321,7 +341,16 @@ for (depvar in names(AV)){
       res.coeff = as.data.frame(Res$coefficients)
       res.coeff$stbeta = c(NA,lm.beta.lmer(model.lme))
       res.coeff$pvalue = pt(abs(res.coeff$"t value"), 1000000, lower.tail = F) * 2
-      resall[[paste0(depvar,"_coeff", "_",sv)]]=res.coeff
+      resall[[paste0(depvar,"_coeff", "_threeway_",sv)]]=res.coeff
+  }
+  
+  for (sv in Sensvar){
+      model.lme = lme4::lmer(str_replace(models.two[[depvar]], "~1+",paste0("~1+",sv,"+")), data=long2)
+      Res = summary(model.lme)
+      res.coeff = as.data.frame(Res$coefficients)
+      res.coeff$stbeta = c(NA,lm.beta.lmer(model.lme))
+      res.coeff$pvalue = pt(abs(res.coeff$"t value"), 1000000, lower.tail = F) * 2
+      resall[[paste0(depvar,"_coeff", "_twoway_",sv)]]=res.coeff
   }
 }
 
@@ -332,11 +361,15 @@ for (depvar in names(AV)){
 
 ### stressed
 
-full models: `r models[[1]]`
 
 h0 model: DV~1+(1|twuid):
 
-overall model p-value:`r as.character(signif(resall[["AV_stressed_modsig"]],3))`
+full models threeway: `r models[[1]]`
+overall model p-value:`r as.character(signif(resall[["AV_stressed_modsig_threeway"]],3))`
+
+full models twoway: `r models.two[[1]]`
+overall model p-value:`r as.character(signif(resall[["AV_stressed_modsig_twoway"]],3))`
+
 
 ```{r, wrap_res_stressed_2}
 tableplot = function (x){
@@ -347,12 +380,12 @@ tableplot = function (x){
 depvar = "AV_stressed"
 labeltag = "Psychological stress"
 
-ggplot(data = resall[[paste0(depvar, "_longdat")]], 
+ggplot(data = resall[[paste0(depvar, "_longdat_threeway")]], 
        aes(DV, group=Time, col=Time)) + 
   ylab("density") + xlab(labeltag)+
   geom_density()
 
-ggplot(data = resall[[paste0(depvar, "_longdat")]], 
+ggplot(data = resall[[paste0(depvar, "_longdat_threeway")]], 
        aes(Time,DV, col=group)) + 
   ylab(labeltag) + xlab("Time")+
   geom_smooth(method = 'loess') + geom_point() +   facet_wrap(~gender)
@@ -362,36 +395,52 @@ ggplot(data = resall[[paste0(depvar, "_longdat")]],
 
 ```{r, sensitivity_stressed}
 
-resall[[paste0(depvar, "_coeff")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_DEPquant")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway")]] %>% tableplot()
+
 resall[[paste0(depvar, "_coeff_males")]] %>% tableplot()
 resall[[paste0(depvar, "_coeff_females")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_ADHD_life")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_Eat_life")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_ANXPTSD_life")]] %>% tableplot()
 
+resall[[paste0(depvar, "_coeff_threeway_ADHD_life")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_Eat_life")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_Anxiety_lifetime")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_PTSD_lifetime")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_TSSTmedother")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_TSSTSSRI")]] %>% tableplot()
+
+
+resall[[paste0(depvar, "_coeff_twoway_ADHD_life")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_Eat_life")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_Anxiety_lifetime")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_PTSD_lifetime")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_TSSTmedother")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_TSSTSSRI")]] %>% tableplot()
 ```
 
 ### CORT
 
 
-full models: `r models[[2]]`
+h0 model: DV~1+(1|twuid):
 
-h0 model:DV~1+(1|twuid):
+full models threeway: `r models[[2]]`
+overall model p-value:`r as.character(signif(resall[["AV_CORT_modsig_threeway"]],3))`
 
-overall model p-value:`r as.character(signif(resall[["AV_CORT_modsig"]],3))`
+full models twoway: `r models.two[[2]]`
+overall model p-value:`r as.character(signif(resall[["AV_CORT_modsig_twoway"]],3))`
+
+
 
 
 ```{r wrap_res_CORT_2}
 depvar = "AV_CORT"
 labeltag = "Cortisol"
 
-ggplot(data = resall[[paste0(depvar, "_longdat")]], 
+ggplot(data = resall[[paste0(depvar, "_longdat_threeway")]], 
        aes(DV, group=Time, col=Time)) + 
   ylab("density") + xlab(labeltag)+
   geom_density()
 
-ggplot(data = resall[[paste0(depvar, "_longdat")]], 
+ggplot(data = resall[[paste0(depvar, "_longdat_threeway")]], 
        aes(Time,DV, col=group)) + 
   ylab(labeltag) + xlab("Time")+
   geom_smooth(method = 'loess') + geom_point() +   facet_wrap(~gender)
@@ -401,40 +450,51 @@ ggplot(data = resall[[paste0(depvar, "_longdat")]],
 #### sensitivity analyses
 
 ```{r, sensitivity_cort}
+resall[[paste0(depvar, "_coeff_threeway")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway")]] %>% tableplot()
 
-resall[[paste0(depvar, "_coeff")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_DEPquant")]] %>% tableplot()
 resall[[paste0(depvar, "_coeff_males")]] %>% tableplot()
 resall[[paste0(depvar, "_coeff_females")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_ADHD_life")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_Eat_life")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_ANXPTSD_life")]] %>% tableplot()
 
+resall[[paste0(depvar, "_coeff_threeway_ADHD_life")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_Eat_life")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_Anxiety_lifetime")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_PTSD_lifetime")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_TSSTmedother")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_TSSTSSRI")]] %>% tableplot()
+
+
+resall[[paste0(depvar, "_coeff_twoway_ADHD_life")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_Eat_life")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_Anxiety_lifetime")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_PTSD_lifetime")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_TSSTmedother")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_TSSTSSRI")]] %>% tableplot()
 
 ```
 
 ### TEST
 
 
-full models: `r models[[3]]`
-
 h0 model: DV~1+(1|twuid):
 
+full models threeway: `r models[[3]]`
+overall model p-value:`r as.character(signif(resall[["AV_TEST_modsig_threeway"]],3))`
 
-overall model p-value:
-`r as.character(signif(resall[["AV_TEST_modsig"]], 3))`
+full models twoway: `r models.two[[3]]`
+overall model p-value:`r as.character(signif(resall[["AV_TEST_modsig_twoway"]],3))`
 
 
 ```{r wrap_res_TEST_2}
 depvar = "AV_TEST"
 labeltag = "Testosterone"
 
-ggplot(data = resall[[paste0(depvar, "_longdat")]], 
+ggplot(data = resall[[paste0(depvar, "_longdat_threeway")]], 
        aes(DV, group=Time, col=Time)) + 
   ylab("density") + xlab(labeltag)+
   geom_density()
 
-ggplot(data = resall[[paste0(depvar, "_longdat")]], 
+ggplot(data = resall[[paste0(depvar, "_longdat_threeway")]], 
        aes(Time,DV, col=group)) + 
   ylab(labeltag) + xlab("Time")+
   geom_smooth(method = 'loess') + geom_point() +   facet_wrap(~gender)
@@ -445,27 +505,38 @@ ggplot(data = resall[[paste0(depvar, "_longdat")]],
 #### sensitivity analyses
 
 ```{r, sensitivity_test}
+resall[[paste0(depvar, "_coeff_threeway")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway")]] %>% tableplot()
 
-resall[[paste0(depvar, "_coeff")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_DEPquant")]] %>% tableplot()
 resall[[paste0(depvar, "_coeff_males")]] %>% tableplot()
 resall[[paste0(depvar, "_coeff_females")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_ADHD_life")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_Eat_life")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_ANXPTSD_life")]] %>% tableplot()
+
+resall[[paste0(depvar, "_coeff_threeway_ADHD_life")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_Eat_life")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_Anxiety_lifetime")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_PTSD_lifetime")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_TSSTmedother")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_TSSTSSRI")]] %>% tableplot()
 
 
+resall[[paste0(depvar, "_coeff_twoway_ADHD_life")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_Eat_life")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_Anxiety_lifetime")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_PTSD_lifetime")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_TSSTmedother")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_TSSTSSRI")]] %>% tableplot()
 ```
 
 
 ### OXT
 
-full models: `r models[[4]]`
+h0 model: DV~1+(1|twuid):
 
-h0 model: DV~DV~1+(1|twuid):
+full models threeway: `r models[[4]]`
+overall model p-value:`r as.character(signif(resall[["AV_OXT_modsig_threeway"]],3))`
 
-overall model p-value:
-`r as.character(signif(resall[["AV_OXT_modsig"]], 3))`
+full models twoway: `r models.two[[4]]`
+overall model p-value:`r as.character(signif(resall[["AV_OXT_modsig_twoway"]],3))`
 
 
 ```{r wrap_res_OXT_2}
@@ -473,12 +544,12 @@ overall model p-value:
 depvar = "AV_OXT"
 labeltag = "Oxytocin"
 
-ggplot(data = resall[[paste0(depvar, "_longdat")]], 
+ggplot(data = resall[[paste0(depvar, "_longdat_threeway")]], 
        aes(DV, group=Time, col=Time)) + 
   ylab("density") + xlab(labeltag)+
   geom_density()
 
-ggplot(data = resall[[paste0(depvar, "_longdat")]], 
+ggplot(data = resall[[paste0(depvar, "_longdat_threeway")]], 
        aes(Time,DV, col=group)) + 
   ylab(labeltag) + xlab("Time")+
   geom_smooth(method = 'loess') + geom_point() +   facet_wrap(~gender)
@@ -489,15 +560,26 @@ ggplot(data = resall[[paste0(depvar, "_longdat")]],
 #### sensitivity analyses
 
 ```{r, sensitivity_OXT}
+resall[[paste0(depvar, "_coeff_threeway")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway")]] %>% tableplot()
 
-resall[[paste0(depvar, "_coeff")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_DEPquant")]] %>% tableplot()
 resall[[paste0(depvar, "_coeff_males")]] %>% tableplot()
 resall[[paste0(depvar, "_coeff_females")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_ADHD_life")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_Eat_life")]] %>% tableplot()
-resall[[paste0(depvar, "_coeff_ANXPTSD_life")]] %>% tableplot()
 
+resall[[paste0(depvar, "_coeff_threeway_ADHD_life")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_Eat_life")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_Anxiety_lifetime")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_PTSD_lifetime")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_TSSTmedother")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_threeway_TSSTSSRI")]] %>% tableplot()
+
+
+resall[[paste0(depvar, "_coeff_twoway_ADHD_life")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_Eat_life")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_Anxiety_lifetime")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_PTSD_lifetime")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_TSSTmedother")]] %>% tableplot()
+resall[[paste0(depvar, "_coeff_twoway_TSSTSSRI")]] %>% tableplot()
 
 ```
 
@@ -533,10 +615,11 @@ tableplot_3= function (x){
 ```
 ## summary table main models 
 
-### all effects
-```{r summarytableshow}
+### all effects twoway
 
-restabnames = grep("coeff$",names(resall), value=T)
+```{r summarytableshow twoway}
+
+restabnames = grep("coeff_twoway$",names(resall), value=T)
 resall_mod=lapply(resall[restabnames], tibble::rownames_to_column)
 fullres=resall_mod %>% reduce(full_join, by="rowname")
 fullres = fullres %>% select (.,- grep("t value", colnames(fullres), value = T))
@@ -550,7 +633,35 @@ fullres %>% tableplot_3()
 
 ### effects of interest
 
-```{r summarytable reduced}
+```{r summarytable reduced twoway}
+
+index = complete.cases(fullres) & !fullres$rowname %in% c("(Intercept)","age_meancentered")
+
+fullres[index,] %>% as.tibble() %>% tableplot_3()
+
+```
+
+
+### all effects threeway
+
+```{r summarytableshow threeway}
+
+restabnames = grep("coeff_threeway$",names(resall), value=T)
+resall_mod=lapply(resall[restabnames], tibble::rownames_to_column)
+fullres=resall_mod %>% reduce(full_join, by="rowname")
+fullres = fullres %>% select (.,- grep("t value", colnames(fullres), value = T))
+newnames = c("-", rep(c("beta", "se", "st.beta", "P"), length(names(AV))))
+
+#fullres %>% tableplot_2() 
+fullres %>% tableplot_3() 
+
+
+```
+
+
+### effects of interest
+
+```{r summarytable reduced threeway}
 
 index = complete.cases(fullres) & !fullres$rowname %in% c("(Intercept)","age_meancentered")
 
@@ -589,17 +700,3 @@ fullres %>% tableplot_3()
 
 ```
 
-
-### quantitative DEP
-```{r summarytableshow_CDquant}
-
-restabnames = grep("coeff_DEPquant$",names(resall), value=T)
-resall_mod=lapply(resall[restabnames], tibble::rownames_to_column)
-fullres=resall_mod %>% reduce(full_join, by="rowname")
-fullres = fullres %>% select (.,- grep("t value", colnames(fullres), value = T))
-newnames = c("-", rep(c("beta", "se", "st.beta", "P"), length(names(AV))))
-
-#fullres %>% tableplot_2() 
-fullres %>% tableplot_3() 
-
-```
